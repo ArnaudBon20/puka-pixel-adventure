@@ -937,7 +937,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         {/* Level Up Overlay */}
         {showLevelUp && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-              <h2 className="text-5xl md:text-7xl text-[#FFEB3B] pixel-text drop-shadow-[4px_4px_0_#000] animate-bounce">
+              <h2 className="text-3xl md:text-5xl text-[#FFEB3B] pixel-text drop-shadow-[4px_4px_0_#000] animate-bounce">
                   LEVEL UP!
               </h2>
           </div>
