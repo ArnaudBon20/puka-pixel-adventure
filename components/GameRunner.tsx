@@ -706,14 +706,20 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
 
       // Platforms
       platforms.forEach(plat => {
+        // Tree branch platform
         const grad = ctx.createLinearGradient(plat.x, plat.y, plat.x, plat.y + plat.height);
-        grad.addColorStop(0, '#E0E0E0');
-        grad.addColorStop(0.5, '#F5F5F5');
-        grad.addColorStop(1, '#9E9E9E');
+        grad.addColorStop(0, '#8D6E63');
+        grad.addColorStop(0.5, '#795548');
+        grad.addColorStop(1, '#5D4037');
         ctx.fillStyle = grad;
         ctx.fillRect(plat.x, plat.y, plat.width, plat.height);
-        ctx.strokeStyle = '#757575';
-        ctx.strokeRect(plat.x + 5, plat.y + 2, plat.width - 10, plat.height - 4);
+        ctx.strokeStyle = '#4E342E';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(plat.x + 2, plat.y + 2, plat.width - 4, plat.height - 4);
+        ctx.fillStyle = '#A1887F';
+        ctx.fillRect(plat.x + 10, plat.y + 4, 14, 2);
+        ctx.fillRect(plat.x + 40, plat.y + 8, 10, 2);
+        ctx.fillRect(plat.x + 70, plat.y + 5, 12, 2);
       });
 
       // Carrots
@@ -721,15 +727,16 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         if (b.collected) return;
         ctx.fillStyle = '#FB8C00';
         ctx.beginPath();
-        ctx.moveTo(b.x + b.width / 2, b.y + 3);
-        ctx.lineTo(b.x + 4, b.y + b.height - 2);
-        ctx.lineTo(b.x + b.width - 4, b.y + b.height - 2);
+        // Wide top, narrow bottom
+        ctx.moveTo(b.x + 4, b.y + 5);
+        ctx.lineTo(b.x + b.width - 4, b.y + 5);
+        ctx.lineTo(b.x + b.width / 2, b.y + b.height - 2);
         ctx.closePath();
         ctx.fill();
         ctx.fillStyle = '#66BB6A';
-        ctx.fillRect(b.x + 10, b.y, 2, 6);
-        ctx.fillRect(b.x + 13, b.y - 1, 2, 6);
-        ctx.fillRect(b.x + 7, b.y - 1, 2, 6);
+        ctx.fillRect(b.x + 11, b.y - 1, 2, 6);
+        ctx.fillRect(b.x + 14, b.y - 2, 2, 6);
+        ctx.fillRect(b.x + 8, b.y - 2, 2, 6);
       });
 
       // Power Ups on Ground
