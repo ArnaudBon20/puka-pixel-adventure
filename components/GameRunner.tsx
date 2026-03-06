@@ -722,11 +722,17 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
               ctx.arc(p.x + 25, p.y + 12, 6, 0, Math.PI * 2);
               ctx.stroke();
           } else {
-              ctx.fillStyle = '#FFF';
-              ctx.fillRect(p.x + 5, p.y + 5, 20, 20);
-              ctx.strokeStyle = '#E0E0E0';
+              // Chocolate power-up
+              ctx.fillStyle = '#4E342E';
+              ctx.fillRect(p.x + 4, p.y + 6, 22, 18);
+              ctx.strokeStyle = '#2D1B16';
               ctx.lineWidth = 2;
-              ctx.strokeRect(p.x + 5, p.y + 5, 20, 20);
+              ctx.strokeRect(p.x + 4, p.y + 6, 22, 18);
+              ctx.fillStyle = '#6D4C41';
+              ctx.fillRect(p.x + 6, p.y + 8, 8, 6);
+              ctx.fillRect(p.x + 16, p.y + 8, 8, 6);
+              ctx.fillRect(p.x + 6, p.y + 16, 8, 6);
+              ctx.fillRect(p.x + 16, p.y + 16, 8, 6);
           }
       });
 
@@ -799,12 +805,12 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           
           ctx.fillStyle = 'rgba(0,0,0,0.5)';
           ctx.fillRect(barX, barY, barWidth, barHeight);
-          ctx.fillStyle = activeEffectType === 'shield' ? '#FFD700' : '#FFFFFF';
+          ctx.fillStyle = activeEffectType === 'shield' ? '#FFD700' : '#6D4C41';
           ctx.fillRect(barX + 2, barY + 2, (barWidth - 4) * pct, barHeight - 4);
           ctx.fillStyle = '#FFF';
           ctx.font = '10px "Press Start 2P"';
           ctx.textAlign = 'center';
-          ctx.fillText(activeEffectType === 'shield' ? "SHIELD" : "SUGAR RUSH!", CANVAS_WIDTH / 2, barY - 10);
+          ctx.fillText(activeEffectType === 'shield' ? "SHIELD" : "CHOCO RUSH!", CANVAS_WIDTH / 2, barY - 10);
       }
       
       ctx.restore();
@@ -894,7 +900,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
                   <div className="text-2xl">☕</div>
               )}
               {storedItem === 'sugar' && (
-                  <div className="text-2xl">🧊</div>
+                  <div className="text-2xl">🍫</div>
               )}
               {!storedItem && <span className="text-[#5D4037] text-xs">EMPTY</span>}
               
