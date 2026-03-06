@@ -92,7 +92,7 @@ const App: React.FC = () => {
                       <img src={skin.imageUrl} alt={skin.name} className="w-full h-full object-contain pixelated" style={{ imageRendering: 'pixelated' }} />
                     ) : (
                       <div className="w-full h-full bg-[#E5C098] flex items-center justify-center text-xs text-black font-bold relative overflow-hidden">
-                        <span className="z-10">BUNNY</span>
+                        <span className="z-10">PUKA</span>
                         <div className="absolute bottom-0 w-full h-1/4 bg-[#F48FB1]"></div>
                       </div>
                     )}
