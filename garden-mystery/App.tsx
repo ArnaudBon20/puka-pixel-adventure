@@ -22,7 +22,7 @@ import {
 import GameCanvas from './components/GameCanvas';
 import UIOverlay from './components/UIOverlay';
 import Controls from './components/Controls';
-import { Play, Crown, Cat, Frown } from 'lucide-react';
+import { Play, Crown, Frown } from 'lucide-react';
 
 const INITIAL_GAME_STATE: GameState = {
   levelIndex: 0,
@@ -98,7 +98,7 @@ const App: React.FC = () => {
       isPlaying: true,
       isGameOver: false,
       gameWon: false,
-      messages: ["Weiche der Katze aus! Sammle alle Karotten!"]
+      messages: ["Weiche dem blonden Jungen aus! Sammle alle Karotten!"]
     }));
   }, []);
 
@@ -118,7 +118,7 @@ const App: React.FC = () => {
       isPlaying: false,
       gameWon: false,
       isGameOver: true,
-      messages: [...prev.messages, "Von der grimmigen Katze erwischt! Oh nein!"]
+      messages: [...prev.messages, "Vom blonden Jungen erwischt! Oh nein!"]
     }));
   }, []);
 
@@ -141,7 +141,7 @@ const App: React.FC = () => {
             messages: [...prev.messages, "Garnknauel geworfen!"] 
         }));
 
-        // Alert cats to that position
+        // Alert boys to that position
         setCats(prev => prev.map(cat => ({
             ...cat,
             state: CatState.ALERT,
@@ -154,9 +154,9 @@ const App: React.FC = () => {
         setGameState(prev => ({ 
             ...prev, 
             items: { ...prev.items, toys: prev.items.toys - 1 },
-            messages: [...prev.messages, "QUIEK! Die Katzen sind verwirrt."] 
+            messages: [...prev.messages, "QUIEK! Die Jungen sind verwirrt."] 
         }));
-        // Stun cats
+        // Stun boys
         setCats(prev => prev.map(cat => ({
             ...cat,
             state: CatState.SLEEP,
@@ -371,9 +371,9 @@ const App: React.FC = () => {
                 <span className="text-2xl text-earth italic">Geheimnis</span>
             </h1>
             <div className="mb-6 text-left space-y-2 bg-stone-100 p-4 rounded border border-stone-300">
-                <p><strong>Ziel:</strong> Sammle alle Karotten, ohne erwischt zu werden!</p>
+                <p><strong>Ziel:</strong> Sammle alle Karotten, ohne vom blonden Jungen erwischt zu werden!</p>
                 <p><strong>Steuerung:</strong> D-Pad oder Pfeiltasten.</p>
-                <p><strong>Schonzeit:</strong> Katzen warten 5 Zuege.</p>
+                <p><strong>Schonzeit:</strong> Der Junge wartet 5 Zuege.</p>
                 <p><strong>Schnueffeln:</strong> Taste halten oder LEERTASTE.</p>
                 <p><strong>Objekte:</strong> Garn zur Ablenkung, Quietschspielzeug zum Betaeuben.</p>
             </div>
@@ -437,11 +437,11 @@ const App: React.FC = () => {
                             ) : (
                                 <>
                                     <div className="flex justify-center mb-4">
-                                        <Cat size={64} className="text-stone-600" />
-                                        <Frown size={32} className="text-stone-600 -ml-4 mt-8" />
+                                        <span className="text-6xl">👱‍♂️</span>
+                                        <Frown size={32} className="text-stone-600 -ml-2 mt-8" />
                                     </div>
                                     <h2 className="text-3xl font-bold text-ink mb-2">Erwischt!</h2>
-                                    <p className="mb-6">Die grimmige Katze hat dich entdeckt.</p>
+                                    <p className="mb-6">Der blonde Junge hat dich entdeckt.</p>
                                     <button 
                                         onClick={() => startLevel(gameState.levelIndex)}
                                         className="px-6 py-2 bg-earth hover:bg-stone-700 text-white rounded-full font-bold shadow"

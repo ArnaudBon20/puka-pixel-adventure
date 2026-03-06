@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Entity, EntityType, Position, TileType, CatEntity, CatState, VisualEffect } from '../types';
 import { clsx } from 'clsx';
-import { Cat, Eye, Hexagon, Waves, TreePine, Sparkles } from 'lucide-react';
+import { Eye, Hexagon, Waves, TreePine, Sparkles } from 'lucide-react';
 import { TILE_SIZE } from '../constants';
 
 interface GameCanvasProps {
@@ -80,8 +80,19 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
       transform: `rotate(${rotation}deg)`,
     };
 
+    if (type === EntityType.CAT) {
+      return (
+        <div
+          key={key}
+          className={clsx("absolute transition-all duration-300 ease-linear flex items-center justify-center", extraClasses)}
+          style={style}
+        >
+          <span style={{ fontSize: `${Math.floor(TILE_SIZE * 0.75)}px` }}>👱‍♂️</span>
+        </div>
+      );
+    }
+
     let Icon = Hexagon;
-    if (type === EntityType.CAT) Icon = Cat;
     if (type === EntityType.TREAT) Icon = Hexagon;
     if (type === EntityType.YARN) Icon = Hexagon; 
     if (type === EntityType.TOY) Icon = Hexagon;
@@ -97,7 +108,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     );
   };
   
-  const renderBoy = () => {
+  const renderPuka = () => {
     const isFlipped = playerDirection.x < 0; // Flip if moving left
 
     const style = {
@@ -110,7 +121,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     
     return (
       <div
-        key="boy"
+        key="puka"
         className="absolute transition-all duration-300 ease-linear flex items-center justify-center z-50"
         style={style}
       >
@@ -121,7 +132,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
           className="relative drop-shadow-md leading-none"
           style={{ fontSize: `${Math.floor(TILE_SIZE * 0.8)}px` }}
         >
-          👱‍♂️
+          🐰
         </span>
         
         {/* Cute details - A little collar tag */}
@@ -211,12 +222,12 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
       ))}
 
       {/* Player Rendered Distinctly */}
-      {renderBoy()}
+      {renderPuka()}
       
-      {/* Cats */}
+      {/* Blond Boys */}
       {cats.map((cat) => (
         <div key={cat.id}>
-          {/* Cat Vision Cone Indicator (Simplified as an eye if alert) */}
+          {/* Vision indicator */}
           {cat.state === CatState.ALERT && (
             <div 
               className="absolute text-red-600 animate-pulse z-30"

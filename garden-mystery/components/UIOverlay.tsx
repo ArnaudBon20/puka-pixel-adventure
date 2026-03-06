@@ -1,6 +1,6 @@
 import React from 'react';
 import { GameState, LevelConfig } from '../types';
-import { RotateCcw, Home, Cat } from 'lucide-react';
+import { RotateCcw, Home } from 'lucide-react';
 
 interface UIOverlayProps {
   gameState: GameState;
@@ -62,8 +62,8 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
         <div className="flex items-center gap-2">
             {movesUntilActive > 0 ? (
                 <div className="flex items-center gap-2 px-3 py-1 rounded-full text-sm font-bold bg-blue-100 border border-blue-300 text-blue-800">
-                    <Cat size={16} />
-                    <span>Katzen schlafen: {movesUntilActive}</span>
+                    <span>👱‍♂️</span>
+                    <span>Junge wartet: {movesUntilActive}</span>
                 </div>
             ) : (
                 <div className={`px-3 py-1 rounded-full text-sm font-bold border ${isSniffing ? 'bg-pink-200 border-pink-400 text-pink-900 animate-pulse' : 'bg-stone-200 border-stone-300 text-stone-500'}`}>

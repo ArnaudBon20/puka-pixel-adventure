@@ -15,7 +15,7 @@ export const LEVELS: LevelConfig[] = [
   {
     id: 1,
     name: "Der Rosengarten",
-    description: "Ein sanfter Start. Sammle alle 3 Karotten. Nutze das hohe Gras (,,), um dich zu verstecken.",
+    description: "Ein sanfter Start. Sammle alle 3 Karotten. Nutze das hohe Gras (,,), damit der Junge dich nicht sieht.",
     map: [
       "#########",
       "#P......#",
@@ -34,7 +34,7 @@ export const LEVELS: LevelConfig[] = [
   {
     id: 2,
     name: "Heckenlabyrinth",
-    description: "Die Wege sind verwinkelt. Nutze das Garn (Y), um die Katze abzulenken.",
+    description: "Die Wege sind verwinkelt. Nutze das Garn (Y), um den Jungen abzulenken.",
     map: [
       "###########",
       "#P...#...T#",
