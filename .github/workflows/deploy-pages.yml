@@ -35,7 +35,7 @@ jobs:
 
       - name: Install Garden dependencies
         working-directory: garden-mystery
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Build Puka Garden Mystery
         working-directory: garden-mystery
