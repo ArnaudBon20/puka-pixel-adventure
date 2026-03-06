@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { GameRunner } from './components/GameRunner';
-import { SkinCreator } from './components/SkinCreator';
 import { GameState, PugSkin } from './types';
 
 // Placeholder/Default Skin
@@ -15,8 +14,6 @@ const BABY_PUKA_SKIN: PugSkin = {
   name: 'Bebe Puka',
   imageUrl: null
 };
-
-const UNLOCK_SCORE = 500;
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.MENU);
@@ -36,9 +33,6 @@ const App: React.FC = () => {
   });
 
   const activeSkin = skins.find(s => s.id === activeSkinId) || DEFAULT_SKIN;
-  const isCreatorUnlocked = highScore >= UNLOCK_SCORE;
-  const hasGeminiKey = Boolean(import.meta.env.VITE_GEMINI_API_KEY);
-  const canUseSkinCreator = isCreatorUnlocked && hasGeminiKey;
 
   const handleStartGame = () => {
     setGameState(GameState.PLAYING);
@@ -55,12 +49,6 @@ const App: React.FC = () => {
       }
     }
     setGameState(GameState.GAME_OVER);
-  };
-
-  const handleSkinCreated = (newSkin: PugSkin) => {
-    setSkins(prev => [...prev, newSkin]);
-    setActiveSkinId(newSkin.id);
-    setGameState(GameState.MENU);
   };
 
   return (
@@ -108,39 +96,6 @@ const App: React.FC = () => {
                     )}
                   </button>
                 ))}
-                
-                {/* New Skin Button - Locked until score 500 */}
-                <button
-                  onClick={() => canUseSkinCreator && setGameState(GameState.SKIN_CREATOR)}
-                  disabled={!canUseSkinCreator}
-                  className={`aspect-square rounded border-2 border-dashed flex flex-col items-center justify-center transition-colors group relative overflow-hidden ${
-                    canUseSkinCreator 
-                    ? 'border-[#81C784] bg-[#1B5E20]/30 hover:bg-[#1B5E20] hover:border-[#FFEB3B] text-[#81C784] hover:text-[#FFEB3B] cursor-pointer'
-                    : 'border-gray-600 bg-black/20 text-gray-500 cursor-not-allowed'
-                  }`}
-                >
-                  {canUseSkinCreator ? (
-                    <>
-                      <span className="text-3xl mb-1 group-hover:scale-110 transition-transform">+</span>
-                      <span className="text-[10px]">NEW SKIN</span>
-                    </>
-                  ) : (
-                    <>
-                       <div className="text-2xl mb-1">🔒</div>
-                       <span className="text-[8px] text-center px-1">
-                         {!isCreatorUnlocked ? `UNLOCK AT ${UNLOCK_SCORE} PTS` : 'AI OFF ON WEB'}
-                       </span>
-                    </>
-                  )}
-                </button>
-              </div>
-              {isCreatorUnlocked && !hasGeminiKey && (
-                <div className="mt-3 text-[10px] text-amber-200 bg-black/25 border border-amber-300/30 rounded p-2 text-center">
-                  Custom skin generation needs a Gemini API key and is disabled on this public web build.
-                </div>
-              )}
-              <div className="mt-4 text-center text-[#FFEB3B] text-xs font-bold">
-                Guest: {activeSkin.name}
               </div>
             </div>
 
@@ -197,14 +152,6 @@ const App: React.FC = () => {
               </button>
             </div>
           </div>
-        )}
-
-        {/* --- SKIN CREATOR --- */}
-        {gameState === GameState.SKIN_CREATOR && (
-          <SkinCreator 
-            onSkinCreated={handleSkinCreated}
-            onCancel={() => setGameState(GameState.MENU)}
-          />
         )}
 
       </div>
