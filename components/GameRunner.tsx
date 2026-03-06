@@ -864,7 +864,6 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
               <h2 className="text-5xl md:text-7xl text-[#FFEB3B] pixel-text drop-shadow-[4px_4px_0_#000] animate-bounce">
                   LEVEL UP!
               </h2>
-              <p className="text-white text-xl pixel-text bg-black/50 p-2 rounded mt-2">FASTER & HARDER!</p>
           </div>
         )}
 
@@ -880,6 +879,11 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         <div>Enter/Tap Icon: Use Item</div>
         <div>Upper Path: <span className="text-[#FFEB3B]">3x Points!</span></div>
       </div>
+      {showLevelUp && (
+        <div className="mt-2 text-center text-[#FFEB3B] text-xs md:text-sm pixel-text bg-black/35 p-2 rounded border border-[#FFEB3B]/40">
+          FASTER & HARDER!
+        </div>
+      )}
     </div>
   );
 };
