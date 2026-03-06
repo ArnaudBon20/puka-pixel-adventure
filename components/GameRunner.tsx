@@ -673,7 +673,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           // Draw "3x" floating text
           ctx.font = '20px "Press Start 2P"';
           ctx.fillStyle = `rgba(255, 215, 0, ${0.5 + Math.sin(frameCount * 0.2) * 0.5})`;
-          ctx.fillText("3x ZONE!", CANVAS_WIDTH - 150, 50);
+          ctx.fillText("3x BEREICH!", CANVAS_WIDTH - 190, 50);
       }
 
       // Background Bushes
@@ -875,7 +875,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           ctx.fillStyle = '#FFF';
           ctx.font = '10px "Press Start 2P"';
           ctx.textAlign = 'center';
-          ctx.fillText(activeEffectType === 'shield' ? "SHIELD" : "CHOCO RUSH!", CANVAS_WIDTH / 2, barY - 10);
+          ctx.fillText(activeEffectType === 'shield' ? "SCHILD" : "SCHOKO-SCHUB!", CANVAS_WIDTH / 2, barY - 10);
       }
       
       ctx.restore();
@@ -926,11 +926,11 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         {/* HUD */}
         <div className="absolute top-2 left-2 md:top-4 md:left-4 flex gap-2 md:gap-4 bg-[#3E2723]/90 p-1.5 md:p-2 rounded border border-[#D7CCC8] md:border-2">
           <div className="text-white text-[10px] md:text-xl pixel-text">
-            PTS: <span className="text-[#FFEB3B]">{currentScore}</span>
+            PKT: <span className="text-[#FFEB3B]">{currentScore}</span>
           </div>
           <div className="w-0.5 bg-[#D7CCC8]"></div>
           <div className="text-white text-[10px] md:text-xl pixel-text">
-            LVL: <span className="text-[#F06292]">{currentLevel}</span>
+            LEVEL: <span className="text-[#F06292]">{currentLevel}</span>
           </div>
         </div>
       
@@ -938,7 +938,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         {showLevelUp && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
               <h2 className="text-3xl md:text-5xl text-[#FFEB3B] pixel-text drop-shadow-[4px_4px_0_#000] animate-bounce">
-                  LEVEL UP!
+                  LEVEL HOCH!
               </h2>
           </div>
         )}
@@ -947,14 +947,14 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           onClick={onBack}
           className="absolute top-2 right-2 md:top-4 md:right-4 bg-[#D84315] hover:bg-[#BF360C] text-white text-[10px] md:text-xs py-1.5 px-2.5 md:py-2 md:px-4 rounded border-b-2 md:border-b-4 border-[#870000] active:border-b-0 active:mt-1 font-bold shadow-lg"
         >
-          EXIT
+          ZURUCK
         </button>
       </div>
       <div className="mt-3 flex items-start gap-3">
         <div className="flex-1 text-white/85 text-[10px] md:text-xs select-none drop-shadow-md bg-black/35 p-2 rounded text-left border border-white/20">
-          <div>Space/Tap: Jump</div>
-          <div>Enter/Tap Icon: Use Item</div>
-          <div>Upper Path: <span className="text-[#FFEB3B]">3x Points!</span></div>
+          <div>Leertaste/Tippen: Springen</div>
+          <div>Enter/Icon tippen: Objekt nutzen</div>
+          <div>Oberer Weg: <span className="text-[#FFEB3B]">3x Punkte!</span></div>
         </div>
         <div 
           className="flex flex-col items-center cursor-pointer group bg-black/35 p-2 rounded border border-white/20"
@@ -967,18 +967,18 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
               {storedItem === 'sugar' && (
                   <div className="text-2xl">🍫</div>
               )}
-              {!storedItem && <span className="text-[#5D4037] text-xs">EMPTY</span>}
+              {!storedItem && <span className="text-[#5D4037] text-xs">LEER</span>}
               
               <div className="absolute -top-3 -right-3 bg-white text-black text-[8px] px-1 font-bold border border-black hidden md:block">
                   ENTER
               </div>
           </div>
-          <span className="text-white text-[8px] mt-1 bg-black/50 px-1">INVENTORY</span>
+          <span className="text-white text-[8px] mt-1 bg-black/50 px-1">INVENTAR</span>
         </div>
       </div>
       <div className="mt-2 h-10">
         <div className={`text-center text-[#FFEB3B] text-xs md:text-sm pixel-text bg-black/35 p-2 rounded border border-[#FFEB3B]/40 transition-opacity ${showLevelUp ? 'opacity-100' : 'opacity-0'}`}>
-          FASTER & HARDER!
+          SCHNELLER & SCHWERER!
         </div>
       </div>
     </div>

@@ -75,7 +75,7 @@ const Controls: React.FC<ControlsProps> = ({
                 onPointerLeave={(e) => { e.preventDefault(); onSniffEnd(); }}
             >
                 <Search size={24} className={isSniffing ? "text-pink-600" : "text-ink"} />
-                <span className="text-[10px] font-bold uppercase">Sniff</span>
+                <span className="text-[10px] font-bold uppercase">Schnueffeln</span>
             </button>
          </div>
          <div className="flex gap-3">
@@ -85,7 +85,7 @@ const Controls: React.FC<ControlsProps> = ({
                 disabled={yarnCount === 0}
              >
                 <div className="w-4 h-4 bg-rose-400 rounded-full border border-rose-600 shadow-sm" />
-                <span className="text-[10px] font-bold text-rose-800">Yarn ({yarnCount})</span>
+                <span className="text-[10px] font-bold text-rose-800">Garn ({yarnCount})</span>
              </button>
              <button 
                 className={clsx(btnClass, "w-14 h-14 flex-col gap-0.5", toyCount === 0 && "opacity-50")}
@@ -93,7 +93,7 @@ const Controls: React.FC<ControlsProps> = ({
                 disabled={toyCount === 0}
              >
                 <div className="w-4 h-4 bg-yellow-400 rounded-md border border-yellow-600 shadow-sm" />
-                <span className="text-[10px] font-bold text-yellow-800">Toy ({toyCount})</span>
+                <span className="text-[10px] font-bold text-yellow-800">Spielz. ({toyCount})</span>
              </button>
          </div>
       </div>

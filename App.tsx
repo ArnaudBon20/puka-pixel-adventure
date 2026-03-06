@@ -65,10 +65,10 @@ const App: React.FC = () => {
         {gameState !== GameState.PLAYING && (
           <div className="text-center mb-10 animate-bounce">
             <h1 className="text-4xl md:text-6xl text-[#FFEB3B] pixel-text mb-4 drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)]">
-              PUKA'S PARTY
+              PUKAS PARTY
             </h1>
             <p className="text-[#A5D6A7] text-sm md:text-lg">
-              Collect Carrots, jump on <b>Floating Trays</b>, and avoid the bees!
+              Sammle Karotten, springe auf <b>schwebende Tabletts</b> und weiche den Bienen aus!
             </p>
           </div>
         )}
@@ -78,7 +78,7 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center gap-8">
             
             <div className="bg-[#2E7D32] p-6 rounded-lg border-4 border-[#1B5E20] shadow-xl w-full max-w-md">
-              <h2 className="text-[#E8F5E9] text-xl mb-4 text-center pixel-text">SELECT GUEST</h2>
+              <h2 className="text-[#E8F5E9] text-xl mb-4 text-center pixel-text">GAST WAHLEN</h2>
               <div className="grid grid-cols-3 gap-4 max-h-60 overflow-y-auto p-2">
                 {skins.map(skin => (
                   <button
@@ -111,12 +111,12 @@ const App: React.FC = () => {
               onClick={handleStartGame}
               className="bg-[#F06292] hover:bg-[#EC407A] text-white text-2xl py-4 px-12 rounded border-b-8 border-[#880E4F] active:border-b-0 active:mt-2 font-bold shadow-2xl pixel-text transition-all"
             >
-              START
+              STARTEN
             </button>
 
             {highScore > 0 && (
               <div className="text-[#FFEB3B] text-lg pixel-text mt-4">
-                BEST PARTY POINTS: {highScore}
+                BESTE PARTY-PUNKTE: {highScore}
               </div>
             )}
           </div>

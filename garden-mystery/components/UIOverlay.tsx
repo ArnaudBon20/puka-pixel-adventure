@@ -31,10 +31,10 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           <p className="text-sm italic opacity-80">{currentLevel.description}</p>
         </div>
         <div className="flex gap-2">
-             <button onClick={onRestart} className="p-2 hover:bg-stone-200 rounded-full" title="Restart Level">
+             <button onClick={onRestart} className="p-2 hover:bg-stone-200 rounded-full" title="Level neu starten">
                 <RotateCcw size={20} />
              </button>
-             <button onClick={onHome} className="p-2 hover:bg-stone-200 rounded-full" title="Quit to Menu">
+             <button onClick={onHome} className="p-2 hover:bg-stone-200 rounded-full" title="Zum Menue">
                 <Home size={20} />
              </button>
         </div>
@@ -42,7 +42,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
       
       <div className="flex justify-between items-center pt-2">
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2" title="Carrots Remaining">
+          <div className="flex items-center gap-2" title="Karotten uebrig">
             <span className="text-2xl">🥕</span>
             <span className="text-2xl font-bold">{treatsLeft}</span>
           </div>
@@ -50,11 +50,11 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
           <div className="flex items-center gap-4 text-sm">
              <div className="flex items-center gap-1 opacity-70">
                 <div className="w-4 h-4 bg-rose-400 rounded-full border border-rose-600"></div>
-                <span>x {gameState.items.yarn} (Press 1)</span>
+                <span>x {gameState.items.yarn} (Taste 1)</span>
              </div>
              <div className="flex items-center gap-1 opacity-70">
                 <div className="w-4 h-4 bg-yellow-400 rounded-md border border-yellow-600"></div>
-                <span>x {gameState.items.toys} (Press 2)</span>
+                <span>x {gameState.items.toys} (Taste 2)</span>
              </div>
           </div>
         </div>
@@ -63,11 +63,11 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
             {movesUntilActive > 0 ? (
                 <div className="flex items-center gap-2 px-3 py-1 rounded-full text-sm font-bold bg-blue-100 border border-blue-300 text-blue-800">
                     <Cat size={16} />
-                    <span>Cats Asleep: {movesUntilActive}</span>
+                    <span>Katzen schlafen: {movesUntilActive}</span>
                 </div>
             ) : (
                 <div className={`px-3 py-1 rounded-full text-sm font-bold border ${isSniffing ? 'bg-pink-200 border-pink-400 text-pink-900 animate-pulse' : 'bg-stone-200 border-stone-300 text-stone-500'}`}>
-                    {isSniffing ? 'SNIFFING...' : 'HOLD SPACE TO SNIFF'}
+                    {isSniffing ? 'SCHNUEFFELN...' : 'LEERTASTE HALTEN ZUM SCHNUEFFELN'}
                 </div>
             )}
         </div>

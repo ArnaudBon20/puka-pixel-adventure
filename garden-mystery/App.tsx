@@ -31,7 +31,7 @@ const INITIAL_GAME_STATE: GameState = {
   gameWon: false,
   score: 0,
   items: { yarn: 1, toys: 1 },
-  messages: ["Welcome to the garden!"]
+  messages: ["Willkommen im Garten!"]
 };
 
 const App: React.FC = () => {
@@ -98,7 +98,7 @@ const App: React.FC = () => {
       isPlaying: true,
       isGameOver: false,
       gameWon: false,
-      messages: ["Avoid the cat! Collect all carrots!"]
+      messages: ["Weiche der Katze aus! Sammle alle Karotten!"]
     }));
   }, []);
 
@@ -108,7 +108,7 @@ const App: React.FC = () => {
       isPlaying: false,
       gameWon: true,
       isGameOver: true,
-      messages: [...prev.messages, "Level Complete! Delicious victory!"]
+      messages: [...prev.messages, "Level geschafft! Leckerer Sieg!"]
     }));
   }, []);
 
@@ -118,7 +118,7 @@ const App: React.FC = () => {
       isPlaying: false,
       gameWon: false,
       isGameOver: true,
-      messages: [...prev.messages, "Caught by the Grumpy Cat! Oh no!"]
+      messages: [...prev.messages, "Von der grimmigen Katze erwischt! Oh nein!"]
     }));
   }, []);
 
@@ -138,7 +138,7 @@ const App: React.FC = () => {
         setGameState(prev => ({ 
             ...prev, 
             items: { ...prev.items, yarn: prev.items.yarn - 1 },
-            messages: [...prev.messages, "Threw a yarn ball!"] 
+            messages: [...prev.messages, "Garnknauel geworfen!"] 
         }));
 
         // Alert cats to that position
@@ -154,7 +154,7 @@ const App: React.FC = () => {
         setGameState(prev => ({ 
             ...prev, 
             items: { ...prev.items, toys: prev.items.toys - 1 },
-            messages: [...prev.messages, "SQUEAK! The cats are confused."] 
+            messages: [...prev.messages, "QUIEK! Die Katzen sind verwirrt."] 
         }));
         // Stun cats
         setCats(prev => prev.map(cat => ({
@@ -367,15 +367,15 @@ const App: React.FC = () => {
         <div className="max-w-md w-full bg-paper p-8 rounded-lg border-8 border-ink shadow-2xl text-center">
             <h1 className="text-4xl font-bold text-ink mb-4 flex flex-col items-center gap-2">
                 <Crown size={48} className="text-rose-400" />
-                <span>Puka Garden</span>
-                <span className="text-2xl text-earth italic">Mystery</span>
+                <span>Puka Garten</span>
+                <span className="text-2xl text-earth italic">Geheimnis</span>
             </h1>
             <div className="mb-6 text-left space-y-2 bg-stone-100 p-4 rounded border border-stone-300">
-                <p><strong>Goal:</strong> Collect all carrots without getting caught!</p>
-                <p><strong>Controls:</strong> D-Pad or Arrow Keys.</p>
-                <p><strong>Grace Period:</strong> Cats wait 5 moves.</p>
-                <p><strong>Sniff:</strong> Hold Button or SPACE.</p>
-                <p><strong>Items:</strong> Yarn distraction, Squeaky Toy stun.</p>
+                <p><strong>Ziel:</strong> Sammle alle Karotten, ohne erwischt zu werden!</p>
+                <p><strong>Steuerung:</strong> D-Pad oder Pfeiltasten.</p>
+                <p><strong>Schonzeit:</strong> Katzen warten 5 Zuege.</p>
+                <p><strong>Schnueffeln:</strong> Taste halten oder LEERTASTE.</p>
+                <p><strong>Objekte:</strong> Garn zur Ablenkung, Quietschspielzeug zum Betaeuben.</p>
             </div>
             <div className="space-y-4">
                 {LEVELS.map((level, idx) => (
@@ -384,7 +384,7 @@ const App: React.FC = () => {
                         onClick={() => startLevel(idx)}
                         className="w-full py-3 bg-sage hover:bg-green-600 text-white font-bold rounded shadow transition-transform hover:scale-105 flex items-center justify-center gap-2"
                     >
-                        <Play size={18} /> Play {level.name}
+                        <Play size={18} /> Spielen {level.name}
                     </button>
                 ))}
             </div>
@@ -421,17 +421,17 @@ const App: React.FC = () => {
                             {gameState.gameWon ? (
                                 <>
                                     <Crown size={64} className="mx-auto text-yellow-500 mb-4 animate-bounce" />
-                                    <h2 className="text-3xl font-bold text-ink mb-2">Delicious Victory!</h2>
-                                    <p className="mb-6">You found all the snacks!</p>
+                                    <h2 className="text-3xl font-bold text-ink mb-2">Leckerer Sieg!</h2>
+                                    <p className="mb-6">Du hast alle Snacks gefunden!</p>
                                     {gameState.levelIndex < LEVELS.length - 1 ? (
                                         <button 
                                             onClick={() => startLevel(gameState.levelIndex + 1)}
                                             className="px-6 py-2 bg-rose-400 hover:bg-rose-500 text-white rounded-full font-bold shadow"
                                         >
-                                            Next Garden &rarr;
+                                            Naechster Garten &rarr;
                                         </button>
                                     ) : (
-                                        <p className="text-xl font-bold text-rose-600">You completed all gardens!</p>
+                                        <p className="text-xl font-bold text-rose-600">Du hast alle Gaerten geschafft!</p>
                                     )}
                                 </>
                             ) : (
@@ -440,13 +440,13 @@ const App: React.FC = () => {
                                         <Cat size={64} className="text-stone-600" />
                                         <Frown size={32} className="text-stone-600 -ml-4 mt-8" />
                                     </div>
-                                    <h2 className="text-3xl font-bold text-ink mb-2">Caught!</h2>
-                                    <p className="mb-6">The Grumpy Cat found you.</p>
+                                    <h2 className="text-3xl font-bold text-ink mb-2">Erwischt!</h2>
+                                    <p className="mb-6">Die grimmige Katze hat dich entdeckt.</p>
                                     <button 
                                         onClick={() => startLevel(gameState.levelIndex)}
                                         className="px-6 py-2 bg-earth hover:bg-stone-700 text-white rounded-full font-bold shadow"
                                     >
-                                        Try Again
+                                        Nochmal
                                     </button>
                                 </>
                             )}

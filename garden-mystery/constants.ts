@@ -14,8 +14,8 @@ import { LevelConfig, TileType, EntityType } from './types';
 export const LEVELS: LevelConfig[] = [
   {
     id: 1,
-    name: "The Rose Garden",
-    description: "A gentle start. Collect all 3 carrots. Use the tall grass (,,) to hide if the cat gets close.",
+    name: "Der Rosengarten",
+    description: "Ein sanfter Start. Sammle alle 3 Karotten. Nutze das hohe Gras (,,), um dich zu verstecken.",
     map: [
       "#########",
       "#P......#",
@@ -33,8 +33,8 @@ export const LEVELS: LevelConfig[] = [
   },
   {
     id: 2,
-    name: "Hedge Labyrinth",
-    description: "The paths twist and turn. Use the yarn (Y) to distract the cat.",
+    name: "Heckenlabyrinth",
+    description: "Die Wege sind verwinkelt. Nutze das Garn (Y), um die Katze abzulenken.",
     map: [
       "###########",
       "#P...#...T#",
@@ -53,8 +53,8 @@ export const LEVELS: LevelConfig[] = [
   },
   {
     id: 3,
-    name: "Fountain Courtyard",
-    description: "Open spaces are dangerous. Stick to the edges. A squeaky toy (S) can buy you time.",
+    name: "Brunnenhof",
+    description: "Offene Flaechen sind gefaehrlich. Bleib am Rand. Ein Quietschspielzeug (S) verschafft dir Zeit.",
     map: [
       "#############",
       "#T....P....T#",
