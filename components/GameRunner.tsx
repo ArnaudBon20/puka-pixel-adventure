@@ -228,6 +228,32 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
       ctx.fillRect(offsetX + 17, offsetY + 13, 2, 2);
     };
 
+    const drawMamaPuka = (x: number, y: number) => {
+      // Bigger bunny, visually larger than default Puka
+      const offsetX = x - 4;
+      const offsetY = y - 8;
+
+      // Body
+      ctx.fillStyle = '#8ED6FF';
+      ctx.fillRect(offsetX + 8, offsetY + 18, 34, 28);
+
+      // Head
+      ctx.fillRect(offsetX + 12, offsetY + 8, 28, 22);
+
+      // Ears
+      ctx.fillRect(offsetX + 14, offsetY - 12, 8, 20);
+      ctx.fillRect(offsetX + 30, offsetY - 12, 8, 20);
+      ctx.fillStyle = '#BFE9FF';
+      ctx.fillRect(offsetX + 16, offsetY - 10, 3, 15);
+      ctx.fillRect(offsetX + 32, offsetY - 10, 3, 15);
+
+      // Eyes + nose
+      ctx.fillStyle = '#1E3A5F';
+      ctx.fillRect(offsetX + 19, offsetY + 16, 3, 3);
+      ctx.fillRect(offsetX + 29, offsetY + 16, 3, 3);
+      ctx.fillRect(offsetX + 25, offsetY + 20, 3, 3);
+    };
+
     const skinImage = new Image();
     let skinLoaded = false;
     if (activeSkin.imageUrl) {
@@ -241,6 +267,8 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
       } else {
         if (activeSkin.id === 'bebe-puka') {
           drawBebePuka(player.x, player.y);
+        } else if (activeSkin.id === 'maman-puka') {
+          drawMamaPuka(player.x, player.y);
         } else {
           drawDefaultBunny(player.x, player.y);
         }
