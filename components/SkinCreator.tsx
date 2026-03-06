@@ -28,7 +28,12 @@ export const SkinCreator: React.FC<SkinCreatorProps> = ({ onSkinCreated, onCance
       };
       onSkinCreated(newSkin);
     } catch (err) {
-      setError("Failed to generate skin. Please try again.");
+      const message = err instanceof Error ? err.message : '';
+      if (message.includes('Missing VITE_GEMINI_API_KEY')) {
+        setError("Skin generator is unavailable here (missing Gemini API key).");
+      } else {
+        setError("Failed to generate skin. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

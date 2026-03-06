@@ -31,6 +31,8 @@ const App: React.FC = () => {
 
   const activeSkin = skins.find(s => s.id === activeSkinId) || DEFAULT_SKIN;
   const isCreatorUnlocked = highScore >= UNLOCK_SCORE;
+  const hasGeminiKey = Boolean(import.meta.env.VITE_GEMINI_API_KEY);
+  const canUseSkinCreator = isCreatorUnlocked && hasGeminiKey;
 
   const handleStartGame = () => {
     setGameState(GameState.PLAYING);
@@ -101,15 +103,15 @@ const App: React.FC = () => {
                 
                 {/* New Skin Button - Locked until score 500 */}
                 <button
-                  onClick={() => isCreatorUnlocked && setGameState(GameState.SKIN_CREATOR)}
-                  disabled={!isCreatorUnlocked}
+                  onClick={() => canUseSkinCreator && setGameState(GameState.SKIN_CREATOR)}
+                  disabled={!canUseSkinCreator}
                   className={`aspect-square rounded border-2 border-dashed flex flex-col items-center justify-center transition-colors group relative overflow-hidden ${
-                    isCreatorUnlocked 
+                    canUseSkinCreator 
                     ? 'border-[#81C784] bg-[#1B5E20]/30 hover:bg-[#1B5E20] hover:border-[#FFEB3B] text-[#81C784] hover:text-[#FFEB3B] cursor-pointer'
                     : 'border-gray-600 bg-black/20 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  {isCreatorUnlocked ? (
+                  {canUseSkinCreator ? (
                     <>
                       <span className="text-3xl mb-1 group-hover:scale-110 transition-transform">+</span>
                       <span className="text-[10px]">NEW SKIN</span>
@@ -117,11 +119,18 @@ const App: React.FC = () => {
                   ) : (
                     <>
                        <div className="text-2xl mb-1">🔒</div>
-                       <span className="text-[8px] text-center px-1">UNLOCK AT {UNLOCK_SCORE} PTS</span>
+                       <span className="text-[8px] text-center px-1">
+                         {!isCreatorUnlocked ? `UNLOCK AT ${UNLOCK_SCORE} PTS` : 'AI OFF ON WEB'}
+                       </span>
                     </>
                   )}
                 </button>
               </div>
+              {isCreatorUnlocked && !hasGeminiKey && (
+                <div className="mt-3 text-[10px] text-amber-200 bg-black/25 border border-amber-300/30 rounded p-2 text-center">
+                  Custom skin generation needs a Gemini API key and is disabled on this public web build.
+                </div>
+              )}
               <div className="mt-4 text-center text-[#FFEB3B] text-xs font-bold">
                 Guest: {activeSkin.name}
               </div>
