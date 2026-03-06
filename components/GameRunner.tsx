@@ -764,16 +764,23 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
 
       obstacles.forEach(obs => {
         if (obs.type === 'teapot') {
-          ctx.fillStyle = '#F8BBD0'; 
-          ctx.fillRect(obs.x, obs.y + 10, obs.width, obs.height - 10);
-          ctx.fillStyle = '#EC407A'; 
-          ctx.fillRect(obs.x + 10, obs.y, 15, 10);
-          ctx.strokeStyle = '#EC407A';
-          ctx.lineWidth = 4;
+          // Rock obstacle (gray)
+          ctx.fillStyle = '#9E9E9E';
           ctx.beginPath();
-          ctx.moveTo(obs.x + obs.width, obs.y + 15);
-          ctx.quadraticCurveTo(obs.x + obs.width + 12, obs.y + 20, obs.x + obs.width, obs.y + 35);
+          ctx.moveTo(obs.x + 4, obs.y + obs.height);
+          ctx.lineTo(obs.x + obs.width - 4, obs.y + obs.height);
+          ctx.lineTo(obs.x + obs.width, obs.y + 20);
+          ctx.lineTo(obs.x + obs.width - 8, obs.y + 8);
+          ctx.lineTo(obs.x + 12, obs.y + 4);
+          ctx.lineTo(obs.x + 2, obs.y + 16);
+          ctx.closePath();
+          ctx.fill();
+          ctx.strokeStyle = '#616161';
+          ctx.lineWidth = 2;
           ctx.stroke();
+          ctx.fillStyle = '#BDBDBD';
+          ctx.fillRect(obs.x + 10, obs.y + 14, 8, 5);
+          ctx.fillRect(obs.x + 24, obs.y + 22, 7, 4);
         } else if (obs.type === 'bee') {
           // Bee body (rounded capsule + bold stripes)
           ctx.fillStyle = '#FDD835';
@@ -809,16 +816,20 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           ctx.closePath();
           ctx.fill();
         } else if (obs.type === 'macaron') {
-          ctx.fillStyle = '#B2DFDB'; 
+          // Poop obstacle
+          ctx.fillStyle = '#6D4C41';
           ctx.beginPath();
-          ctx.ellipse(obs.x + 15, obs.y + 6, 15, 6, 0, 0, Math.PI * 2);
+          ctx.ellipse(obs.x + 15, obs.y + 18, 15, 8, 0, 0, Math.PI * 2);
           ctx.fill();
-          ctx.fillStyle = '#F06292'; 
-          ctx.fillRect(obs.x + 2, obs.y + 6, 26, 8);
-          ctx.fillStyle = '#B2DFDB'; 
           ctx.beginPath();
-          ctx.ellipse(obs.x + 15, obs.y + 16, 15, 6, 0, 0, Math.PI * 2);
+          ctx.ellipse(obs.x + 15, obs.y + 11, 11, 6, 0, 0, Math.PI * 2);
           ctx.fill();
+          ctx.beginPath();
+          ctx.ellipse(obs.x + 15, obs.y + 6, 7, 4, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#3E2723';
+          ctx.fillRect(obs.x + 11, obs.y + 10, 2, 2);
+          ctx.fillRect(obs.x + 18, obs.y + 10, 2, 2);
         } else if (obs.type === 'teabag') {
           ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
           ctx.lineWidth = 2;
