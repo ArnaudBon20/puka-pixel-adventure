@@ -205,6 +205,29 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
       ctx.fillRect(x + 20, y + 15, 2, 2);
     };
 
+    const drawBebePuka = (x: number, y: number) => {
+      // Smaller white bunny centered in the same 40x40 player box
+      const offsetX = x + 5;
+      const offsetY = y + 7;
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(offsetX + 8, offsetY + 12, 20, 18); // body
+      ctx.fillRect(offsetX + 10, offsetY + 6, 16, 12); // head
+
+      // Ears
+      ctx.fillRect(offsetX + 11, offsetY - 6, 4, 12);
+      ctx.fillRect(offsetX + 21, offsetY - 6, 4, 12);
+      ctx.fillStyle = '#F5D8E8';
+      ctx.fillRect(offsetX + 12, offsetY - 4, 2, 8);
+      ctx.fillRect(offsetX + 22, offsetY - 4, 2, 8);
+
+      // Eyes + nose
+      ctx.fillStyle = '#1E3A5F';
+      ctx.fillRect(offsetX + 14, offsetY + 10, 2, 2);
+      ctx.fillRect(offsetX + 20, offsetY + 10, 2, 2);
+      ctx.fillRect(offsetX + 17, offsetY + 13, 2, 2);
+    };
+
     const skinImage = new Image();
     let skinLoaded = false;
     if (activeSkin.imageUrl) {
@@ -216,7 +239,11 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
       if (activeSkin.imageUrl && skinLoaded) {
         ctx.drawImage(skinImage, player.x, player.y, player.width, player.height);
       } else {
-        drawDefaultBunny(player.x, player.y);
+        if (activeSkin.id === 'bebe-puka') {
+          drawBebePuka(player.x, player.y);
+        } else {
+          drawDefaultBunny(player.x, player.y);
+        }
       }
 
       // Draw active effect visuals

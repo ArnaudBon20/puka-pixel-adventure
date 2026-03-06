@@ -10,11 +10,17 @@ const DEFAULT_SKIN: PugSkin = {
   imageUrl: null // triggers default drawing code
 };
 
+const BABY_PUKA_SKIN: PugSkin = {
+  id: 'bebe-puka',
+  name: 'Bebe Puka',
+  imageUrl: null
+};
+
 const UNLOCK_SCORE = 500;
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.MENU);
-  const [skins, setSkins] = useState<PugSkin[]>([DEFAULT_SKIN]);
+  const [skins, setSkins] = useState<PugSkin[]>([DEFAULT_SKIN, BABY_PUKA_SKIN]);
   const [activeSkinId, setActiveSkinId] = useState<string>('default');
   const [lastScore, setLastScore] = useState<number>(0);
   
@@ -93,8 +99,10 @@ const App: React.FC = () => {
                     {skin.imageUrl ? (
                       <img src={skin.imageUrl} alt={skin.name} className="w-full h-full object-contain pixelated" style={{ imageRendering: 'pixelated' }} />
                     ) : (
-                      <div className="w-full h-full bg-[#E5C098] flex items-center justify-center text-xs text-black font-bold relative overflow-hidden">
-                        <span className="z-10">PUKA</span>
+                      <div className={`w-full h-full flex items-center justify-center text-[10px] text-black font-bold relative overflow-hidden ${
+                        skin.id === 'bebe-puka' ? 'bg-white' : 'bg-[#E5C098]'
+                      }`}>
+                        <span className="z-10">{skin.id === 'bebe-puka' ? 'BEBE' : 'PUKA'}</span>
                         <div className="absolute bottom-0 w-full h-1/4 bg-[#F48FB1]"></div>
                       </div>
                     )}
