@@ -815,65 +815,67 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
   }, [activeSkin, onGameOver]);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto border-8 border-[#3E2723] rounded-lg overflow-hidden shadow-2xl bg-black">
-      <canvas
-        ref={canvasRef}
-        width={CANVAS_WIDTH}
-        height={CANVAS_HEIGHT}
-        className="w-full h-auto block"
-        style={{ imageRendering: 'pixelated' }}
-      />
+    <div className="w-full max-w-4xl mx-auto">
+      <div className="relative border-8 border-[#3E2723] rounded-lg overflow-hidden shadow-2xl bg-black">
+        <canvas
+          ref={canvasRef}
+          width={CANVAS_WIDTH}
+          height={CANVAS_HEIGHT}
+          className="w-full h-auto block"
+          style={{ imageRendering: 'pixelated' }}
+        />
       
-      {/* HUD */}
-      <div className="absolute top-4 left-4 flex gap-4 bg-[#3E2723]/90 p-2 rounded border-2 border-[#D7CCC8]">
-        <div className="text-white text-sm md:text-xl pixel-text">
-          PTS: <span className="text-[#FFEB3B]">{currentScore}</span>
+        {/* HUD */}
+        <div className="absolute top-4 left-4 flex gap-4 bg-[#3E2723]/90 p-2 rounded border-2 border-[#D7CCC8]">
+          <div className="text-white text-sm md:text-xl pixel-text">
+            PTS: <span className="text-[#FFEB3B]">{currentScore}</span>
+          </div>
+          <div className="w-0.5 bg-[#D7CCC8]"></div>
+          <div className="text-white text-sm md:text-xl pixel-text">
+            LVL: <span className="text-[#F06292]">{currentLevel}</span>
+          </div>
         </div>
-        <div className="w-0.5 bg-[#D7CCC8]"></div>
-        <div className="text-white text-sm md:text-xl pixel-text">
-          LVL: <span className="text-[#F06292]">{currentLevel}</span>
-        </div>
-      </div>
       
-      {/* Inventory Slot */}
-      <div 
-        className="absolute bottom-4 right-4 flex flex-col items-center cursor-pointer group"
-        onClick={() => activatePowerUpRef.current()}
-      >
-        <div className={`w-16 h-16 border-4 bg-[#3E2723]/90 flex items-center justify-center relative ${storedItem ? 'border-[#FFEB3B] animate-pulse' : 'border-[#5D4037]'}`}>
-            {storedItem === 'shield' && (
-                <div className="text-2xl">☕</div>
-            )}
-            {storedItem === 'sugar' && (
-                 <div className="text-2xl">🧊</div>
-            )}
-            {!storedItem && <span className="text-[#5D4037] text-xs">EMPTY</span>}
-            
-            {/* Key hint */}
-            <div className="absolute -top-3 -right-3 bg-white text-black text-[8px] px-1 font-bold border border-black hidden md:block">
-                ENTER
-            </div>
+        {/* Inventory Slot */}
+        <div 
+          className="absolute bottom-4 right-4 flex flex-col items-center cursor-pointer group"
+          onClick={() => activatePowerUpRef.current()}
+        >
+          <div className={`w-16 h-16 border-4 bg-[#3E2723]/90 flex items-center justify-center relative ${storedItem ? 'border-[#FFEB3B] animate-pulse' : 'border-[#5D4037]'}`}>
+              {storedItem === 'shield' && (
+                  <div className="text-2xl">☕</div>
+              )}
+              {storedItem === 'sugar' && (
+                  <div className="text-2xl">🧊</div>
+              )}
+              {!storedItem && <span className="text-[#5D4037] text-xs">EMPTY</span>}
+              
+              {/* Key hint */}
+              <div className="absolute -top-3 -right-3 bg-white text-black text-[8px] px-1 font-bold border border-black hidden md:block">
+                  ENTER
+              </div>
+          </div>
+          <span className="text-white text-[8px] mt-1 bg-black/50 px-1">INVENTORY</span>
         </div>
-        <span className="text-white text-[8px] mt-1 bg-black/50 px-1">INVENTORY</span>
-      </div>
       
-      {/* Level Up Overlay */}
-      {showLevelUp && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
-            <h2 className="text-5xl md:text-7xl text-[#FFEB3B] pixel-text drop-shadow-[4px_4px_0_#000] animate-bounce">
-                LEVEL UP!
-            </h2>
-             <p className="text-white text-xl pixel-text bg-black/50 p-2 rounded mt-2">FASTER & HARDER!</p>
-        </div>
-      )}
+        {/* Level Up Overlay */}
+        {showLevelUp && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+              <h2 className="text-5xl md:text-7xl text-[#FFEB3B] pixel-text drop-shadow-[4px_4px_0_#000] animate-bounce">
+                  LEVEL UP!
+              </h2>
+              <p className="text-white text-xl pixel-text bg-black/50 p-2 rounded mt-2">FASTER & HARDER!</p>
+          </div>
+        )}
 
-       <button
-        onClick={onBack}
-        className="absolute top-4 right-4 bg-[#D84315] hover:bg-[#BF360C] text-white text-xs py-2 px-4 rounded border-b-4 border-[#870000] active:border-b-0 active:mt-1 font-bold shadow-lg"
-      >
-        EXIT
-      </button>
-      <div className="absolute top-16 right-4 text-white/80 text-[10px] md:text-xs pointer-events-none select-none drop-shadow-md bg-black/35 p-2 rounded text-left">
+        <button
+          onClick={onBack}
+          className="absolute top-4 right-4 bg-[#D84315] hover:bg-[#BF360C] text-white text-xs py-2 px-4 rounded border-b-4 border-[#870000] active:border-b-0 active:mt-1 font-bold shadow-lg"
+        >
+          EXIT
+        </button>
+      </div>
+      <div className="mt-3 text-white/85 text-[10px] md:text-xs select-none drop-shadow-md bg-black/35 p-2 rounded text-left border border-white/20">
         <div>Space/Tap: Jump</div>
         <div>Enter/Tap Icon: Use Item</div>
         <div>Upper Path: <span className="text-[#FFEB3B]">3x Points!</span></div>
