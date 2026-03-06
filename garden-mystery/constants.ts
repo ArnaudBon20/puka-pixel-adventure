@@ -15,7 +15,7 @@ export const LEVELS: LevelConfig[] = [
   {
     id: 1,
     name: "The Rose Garden",
-    description: "A gentle start. Collect all 3 treats. Use the tall grass (,,) to hide if the cat gets close.",
+    description: "A gentle start. Collect all 3 carrots. Use the tall grass (,,) to hide if the cat gets close.",
     map: [
       "#########",
       "#P......#",

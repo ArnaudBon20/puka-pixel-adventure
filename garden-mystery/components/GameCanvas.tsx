@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Entity, EntityType, Position, TileType, CatEntity, CatState, VisualEffect } from '../types';
 import { clsx } from 'clsx';
-import { Cat, Bone, Eye, Hexagon, Waves, TreePine, Sparkles } from 'lucide-react';
+import { Cat, Eye, Hexagon, Waves, TreePine, Sparkles } from 'lucide-react';
 import { TILE_SIZE } from '../constants';
 
 interface GameCanvasProps {
@@ -82,7 +82,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
 
     let Icon = Hexagon;
     if (type === EntityType.CAT) Icon = Cat;
-    if (type === EntityType.TREAT) Icon = Bone;
+    if (type === EntityType.TREAT) Icon = Hexagon;
     if (type === EntityType.YARN) Icon = Hexagon; 
     if (type === EntityType.TOY) Icon = Hexagon;
 
@@ -97,7 +97,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     );
   };
   
-  const renderBunny = () => {
+  const renderBoy = () => {
     const isFlipped = playerDirection.x < 0; // Flip if moving left
 
     const style = {
@@ -110,7 +110,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     
     return (
       <div
-        key="bunny"
+        key="boy"
         className="absolute transition-all duration-300 ease-linear flex items-center justify-center z-50"
         style={style}
       >
@@ -121,7 +121,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
           className="relative drop-shadow-md leading-none"
           style={{ fontSize: `${Math.floor(TILE_SIZE * 0.8)}px` }}
         >
-          🐰
+          👱‍♂️
         </span>
         
         {/* Cute details - A little collar tag */}
@@ -190,7 +190,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
             top: t.pos.y * TILE_SIZE,
           }}
         >
-          <Bone size={TILE_SIZE * 0.5} className="text-earth fill-amber-200" />
+          <span style={{ fontSize: `${Math.floor(TILE_SIZE * 0.55)}px` }}>🥕</span>
         </div>
       ))}
 
@@ -210,8 +210,8 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
         </div>
       ))}
 
-      {/* Bunny Rendered Distinctly */}
-      {renderBunny()}
+      {/* Player Rendered Distinctly */}
+      {renderBoy()}
       
       {/* Cats */}
       {cats.map((cat) => (

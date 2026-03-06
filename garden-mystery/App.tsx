@@ -98,7 +98,7 @@ const App: React.FC = () => {
       isPlaying: true,
       isGameOver: false,
       gameWon: false,
-      messages: ["Avoid the cat! Collect all treats!"]
+      messages: ["Avoid the cat! Collect all carrots!"]
     }));
   }, []);
 
@@ -371,7 +371,7 @@ const App: React.FC = () => {
                 <span className="text-2xl text-earth italic">Mystery</span>
             </h1>
             <div className="mb-6 text-left space-y-2 bg-stone-100 p-4 rounded border border-stone-300">
-                <p><strong>Goal:</strong> Collect all treats without getting caught!</p>
+                <p><strong>Goal:</strong> Collect all carrots without getting caught!</p>
                 <p><strong>Controls:</strong> D-Pad or Arrow Keys.</p>
                 <p><strong>Grace Period:</strong> Cats wait 5 moves.</p>
                 <p><strong>Sniff:</strong> Hold Button or SPACE.</p>

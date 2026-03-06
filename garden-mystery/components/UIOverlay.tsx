@@ -1,6 +1,6 @@
 import React from 'react';
 import { GameState, LevelConfig } from '../types';
-import { Bone, RotateCcw, Home, Cat } from 'lucide-react';
+import { RotateCcw, Home, Cat } from 'lucide-react';
 
 interface UIOverlayProps {
   gameState: GameState;
@@ -42,8 +42,8 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
       
       <div className="flex justify-between items-center pt-2">
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2" title="Treats Remaining">
-            <Bone className="text-earth fill-earth" size={24} />
+          <div className="flex items-center gap-2" title="Carrots Remaining">
+            <span className="text-2xl">🥕</span>
             <span className="text-2xl font-bold">{treatsLeft}</span>
           </div>
           
