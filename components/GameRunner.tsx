@@ -751,15 +751,38 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           ctx.quadraticCurveTo(obs.x + obs.width + 12, obs.y + 20, obs.x + obs.width, obs.y + 35);
           ctx.stroke();
         } else if (obs.type === 'bee') {
-          ctx.fillStyle = '#FFEB3B'; 
-          ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-          ctx.fillStyle = '#212121';
-          ctx.fillRect(obs.x + 8, obs.y, 8, obs.height);
-          ctx.fillRect(obs.x + 24, obs.y, 8, obs.height);
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-          const wingOffset = Math.sin(totalFrames * 0.5) * 5;
+          // Bee body (rounded capsule + bold stripes)
+          ctx.fillStyle = '#FDD835';
           ctx.beginPath();
-          ctx.ellipse(obs.x + 10, obs.y - 10 + wingOffset, 10, 15, Math.PI / 4, 0, Math.PI * 2);
+          ctx.ellipse(obs.x + obs.width / 2, obs.y + obs.height / 2, 17, 13, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#111';
+          ctx.fillRect(obs.x + 6, obs.y + 4, 4, obs.height - 8);
+          ctx.fillRect(obs.x + 14, obs.y + 3, 5, obs.height - 6);
+          ctx.fillRect(obs.x + 24, obs.y + 4, 4, obs.height - 8);
+
+          // Wings with flap animation
+          const wingOffset = Math.sin(totalFrames * 0.65) * 4;
+          ctx.fillStyle = 'rgba(230, 245, 255, 0.95)';
+          ctx.beginPath();
+          ctx.ellipse(obs.x + 10, obs.y - 4 + wingOffset, 9, 12, Math.PI / 6, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.ellipse(obs.x + 24, obs.y - 4 - wingOffset, 9, 12, -Math.PI / 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Eyes + stinger
+          ctx.fillStyle = '#fff';
+          ctx.fillRect(obs.x + 28, obs.y + 11, 3, 3);
+          ctx.fillStyle = '#000';
+          ctx.fillRect(obs.x + 29, obs.y + 12, 1, 1);
+          ctx.fillStyle = '#6D4C41';
+          ctx.beginPath();
+          ctx.moveTo(obs.x - 3, obs.y + obs.height / 2);
+          ctx.lineTo(obs.x + 2, obs.y + obs.height / 2 - 3);
+          ctx.lineTo(obs.x + 2, obs.y + obs.height / 2 + 3);
+          ctx.closePath();
           ctx.fill();
         } else if (obs.type === 'macaron') {
           ctx.fillStyle = '#B2DFDB'; 
