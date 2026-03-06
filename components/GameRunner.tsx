@@ -836,28 +836,6 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           </div>
         </div>
       
-        {/* Inventory Slot */}
-        <div 
-          className="absolute bottom-4 right-4 flex flex-col items-center cursor-pointer group"
-          onClick={() => activatePowerUpRef.current()}
-        >
-          <div className={`w-16 h-16 border-4 bg-[#3E2723]/90 flex items-center justify-center relative ${storedItem ? 'border-[#FFEB3B] animate-pulse' : 'border-[#5D4037]'}`}>
-              {storedItem === 'shield' && (
-                  <div className="text-2xl">☕</div>
-              )}
-              {storedItem === 'sugar' && (
-                  <div className="text-2xl">🧊</div>
-              )}
-              {!storedItem && <span className="text-[#5D4037] text-xs">EMPTY</span>}
-              
-              {/* Key hint */}
-              <div className="absolute -top-3 -right-3 bg-white text-black text-[8px] px-1 font-bold border border-black hidden md:block">
-                  ENTER
-              </div>
-          </div>
-          <span className="text-white text-[8px] mt-1 bg-black/50 px-1">INVENTORY</span>
-        </div>
-      
         {/* Level Up Overlay */}
         {showLevelUp && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
@@ -874,10 +852,31 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           EXIT
         </button>
       </div>
-      <div className="mt-3 text-white/85 text-[10px] md:text-xs select-none drop-shadow-md bg-black/35 p-2 rounded text-left border border-white/20">
-        <div>Space/Tap: Jump</div>
-        <div>Enter/Tap Icon: Use Item</div>
-        <div>Upper Path: <span className="text-[#FFEB3B]">3x Points!</span></div>
+      <div className="mt-3 flex items-start gap-3">
+        <div className="flex-1 text-white/85 text-[10px] md:text-xs select-none drop-shadow-md bg-black/35 p-2 rounded text-left border border-white/20">
+          <div>Space/Tap: Jump</div>
+          <div>Enter/Tap Icon: Use Item</div>
+          <div>Upper Path: <span className="text-[#FFEB3B]">3x Points!</span></div>
+        </div>
+        <div 
+          className="flex flex-col items-center cursor-pointer group bg-black/35 p-2 rounded border border-white/20"
+          onClick={() => activatePowerUpRef.current()}
+        >
+          <div className={`w-16 h-16 border-4 bg-[#3E2723]/90 flex items-center justify-center relative ${storedItem ? 'border-[#FFEB3B] animate-pulse' : 'border-[#5D4037]'}`}>
+              {storedItem === 'shield' && (
+                  <div className="text-2xl">☕</div>
+              )}
+              {storedItem === 'sugar' && (
+                  <div className="text-2xl">🧊</div>
+              )}
+              {!storedItem && <span className="text-[#5D4037] text-xs">EMPTY</span>}
+              
+              <div className="absolute -top-3 -right-3 bg-white text-black text-[8px] px-1 font-bold border border-black hidden md:block">
+                  ENTER
+              </div>
+          </div>
+          <span className="text-white text-[8px] mt-1 bg-black/50 px-1">INVENTORY</span>
+        </div>
       </div>
       {showLevelUp && (
         <div className="mt-2 text-center text-[#FFEB3B] text-xs md:text-sm pixel-text bg-black/35 p-2 rounded border border-[#FFEB3B]/40">
