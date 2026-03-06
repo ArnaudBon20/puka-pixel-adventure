@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Entity, EntityType, Position, TileType, CatEntity, CatState, VisualEffect } from '../types';
 import { clsx } from 'clsx';
-import { Dog, Cat, Bone, Eye, Hexagon, Waves, TreePine, Sparkles } from 'lucide-react';
+import { Cat, Bone, Eye, Hexagon, Waves, TreePine, Sparkles } from 'lucide-react';
 import { TILE_SIZE } from '../constants';
 
 interface GameCanvasProps {
@@ -97,7 +97,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     );
   };
   
-  const renderPugly = () => {
+  const renderBunny = () => {
     const isFlipped = playerDirection.x < 0; // Flip if moving left
 
     const style = {
@@ -110,19 +110,19 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
     
     return (
       <div
-        key="pugly"
+        key="bunny"
         className="absolute transition-all duration-300 ease-linear flex items-center justify-center z-50"
         style={style}
       >
         {/* Tutu Layer */}
         <div className="absolute w-[110%] h-[110%] bg-pink-300/50 rounded-full animate-pulse border-2 border-pink-400/60" />
         
-        {/* Pugly Body */}
-        <Dog 
-            size={TILE_SIZE * 0.85} 
-            className="relative text-stone-900 fill-stone-800 drop-shadow-md" 
-            strokeWidth={2}
-        />
+        <span
+          className="relative drop-shadow-md leading-none"
+          style={{ fontSize: `${Math.floor(TILE_SIZE * 0.8)}px` }}
+        >
+          🐰
+        </span>
         
         {/* Cute details - A little collar tag */}
         <div className="absolute top-[60%] left-[50%] w-1.5 h-1.5 bg-yellow-400 rounded-full shadow-sm" style={{ transform: 'translateX(-50%)' }} />
@@ -210,8 +210,8 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
         </div>
       ))}
 
-      {/* Pugly Rendered Distinctly */}
-      {renderPugly()}
+      {/* Bunny Rendered Distinctly */}
+      {renderBunny()}
       
       {/* Cats */}
       {cats.map((cat) => (

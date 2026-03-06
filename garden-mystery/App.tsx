@@ -367,7 +367,7 @@ const App: React.FC = () => {
         <div className="max-w-md w-full bg-paper p-8 rounded-lg border-8 border-ink shadow-2xl text-center">
             <h1 className="text-4xl font-bold text-ink mb-4 flex flex-col items-center gap-2">
                 <Crown size={48} className="text-rose-400" />
-                <span>Pugly's Garden</span>
+                <span>Bunny's Garden</span>
                 <span className="text-2xl text-earth italic">Mystery</span>
             </h1>
             <div className="mb-6 text-left space-y-2 bg-stone-100 p-4 rounded border border-stone-300">

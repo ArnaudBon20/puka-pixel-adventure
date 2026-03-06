@@ -6,7 +6,7 @@ import { GameState, PugSkin } from './types';
 // Placeholder/Default Skin
 const DEFAULT_SKIN: PugSkin = {
   id: 'default',
-  name: 'Party Pug',
+  name: 'Party Bunny',
   imageUrl: null // triggers default drawing code
 };
 
@@ -21,7 +21,7 @@ const App: React.FC = () => {
   // Initialize high score from local storage
   const [highScore, setHighScore] = useState<number>(() => {
     try {
-      const saved = localStorage.getItem('pugly_high_score');
+      const saved = localStorage.getItem('bunny_high_score');
       return saved ? parseInt(saved, 10) : 0;
     } catch (e) {
       console.warn('Failed to access local storage', e);
@@ -41,7 +41,7 @@ const App: React.FC = () => {
     if (score > highScore) {
       setHighScore(score);
       try {
-        localStorage.setItem('pugly_high_score', score.toString());
+        localStorage.setItem('bunny_high_score', score.toString());
       } catch (e) {
         console.warn('Failed to save to local storage', e);
       }
@@ -63,7 +63,7 @@ const App: React.FC = () => {
         {gameState !== GameState.PLAYING && (
           <div className="text-center mb-10 animate-bounce">
             <h1 className="text-4xl md:text-6xl text-[#FFEB3B] pixel-text mb-4 drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)]">
-              PUGLY'S TEA PARTY
+              BUNNY'S TEA PARTY
             </h1>
             <p className="text-[#A5D6A7] text-sm md:text-lg">
               Collect <b>Biscuits</b>, jump on <b>Floating Trays</b>, and avoid the bees!
@@ -92,8 +92,7 @@ const App: React.FC = () => {
                       <img src={skin.imageUrl} alt={skin.name} className="w-full h-full object-contain pixelated" style={{ imageRendering: 'pixelated' }} />
                     ) : (
                       <div className="w-full h-full bg-[#E5C098] flex items-center justify-center text-xs text-black font-bold relative overflow-hidden">
-                        <span className="z-10">PUG</span>
-                        {/* Little hint of the tutu */}
+                        <span className="z-10">BUNNY</span>
                         <div className="absolute bottom-0 w-full h-1/4 bg-[#F48FB1]"></div>
                       </div>
                     )}

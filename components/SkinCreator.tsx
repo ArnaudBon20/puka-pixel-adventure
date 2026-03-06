@@ -36,19 +36,19 @@ export const SkinCreator: React.FC<SkinCreatorProps> = ({ onSkinCreated, onCance
 
   return (
     <div className="max-w-2xl mx-auto bg-[#2E7D32] border-4 border-[#1B5E20] p-8 rounded-lg shadow-2xl text-center">
-      <h2 className="text-3xl text-[#FFEB3B] mb-6 pixel-text drop-shadow-md">DESIGN A TEA PARTY PUG</h2>
+      <h2 className="text-3xl text-[#FFEB3B] mb-6 pixel-text drop-shadow-md">DESIGN A TEA PARTY BUNNY</h2>
       
       <div className="mb-8">
         <p className="text-[#E8F5E9] mb-4 leading-relaxed font-bold">
-          The guests are arriving! Describe a fancy pug for Gemini AI to paint.
+          The guests are arriving! Describe a fancy bunny for Gemini AI to paint.
         </p>
         <div className="bg-[#1B5E20] p-4 rounded border-2 border-dashed border-[#81C784] inline-block">
           <p className="text-xs text-[#A5D6A7] mb-2">Inspiration:</p>
           <ul className="text-xs text-[#FFF9C4] text-left space-y-2 font-mono">
-            <li>"A posh pug sipping tea in a garden"</li>
-            <li>"A pug wearing a giant floral bonnet"</li>
-            <li>"A pug dressed as a little bumblebee"</li>
-            <li>"A royal pug with a crown and teacup"</li>
+            <li>"A posh bunny sipping tea in a garden"</li>
+            <li>"A bunny wearing a giant floral bonnet"</li>
+            <li>"A bunny dressed as a little bumblebee"</li>
+            <li>"A royal bunny with a crown and teacup"</li>
           </ul>
         </div>
       </div>
@@ -59,7 +59,7 @@ export const SkinCreator: React.FC<SkinCreatorProps> = ({ onSkinCreated, onCance
             type="text"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="e.g. A pug in a tuxedo holding a croissant..."
+            placeholder="e.g. A bunny in a tuxedo holding a croissant..."
             className="w-full bg-[#1B5E20] text-white border-2 border-[#81C784] focus:border-[#FFEB3B] rounded-lg py-4 px-4 text-lg outline-none transition-colors placeholder-[#66BB6A]"
             disabled={loading}
           />

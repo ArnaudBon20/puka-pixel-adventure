@@ -174,45 +174,35 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
       }
     };
 
-    // Helper: Draw Default Pug
-    const drawDefaultPug = (x: number, y: number) => {
-      // Body
-      ctx.fillStyle = '#E5C098'; // Fawn color
-      ctx.fillRect(x, y + 10, 40, 30);
-      
-      // Pink Tutu
-      ctx.fillStyle = '#F48FB1'; // Soft pink
-      ctx.fillRect(x - 5, y + 25, 50, 15);
-      // Ruffles
+    // Helper: Draw Default Bunny
+    const drawDefaultBunny = (x: number, y: number) => {
+      // Bunny body
+      ctx.fillStyle = '#F5E6CC';
+      ctx.fillRect(x + 8, y + 14, 26, 24);
+
+      // Pink tutu
+      ctx.fillStyle = '#F48FB1';
+      ctx.fillRect(x + 4, y + 28, 34, 10);
       ctx.fillStyle = '#F8BBD0';
-      ctx.fillRect(x - 5, y + 35, 50, 5);
+      ctx.fillRect(x + 3, y + 36, 36, 4);
 
       // Head
-      ctx.fillStyle = '#E5C098';
-      ctx.fillRect(x + 20, y, 30, 30);
-      
-      // Ears
-      ctx.fillStyle = '#222';
-      ctx.fillRect(x + 20, y, 10, 10);
-      ctx.fillRect(x + 40, y, 10, 10);
-      
-      // Flower Crown
-      ctx.fillStyle = '#FFEB3B'; 
-      ctx.fillRect(x + 22, y - 5, 6, 6);
-      ctx.fillStyle = '#F06292'; 
-      ctx.fillRect(x + 32, y - 5, 6, 6);
-      ctx.fillStyle = '#9C27B0'; 
-      ctx.fillRect(x + 42, y - 5, 6, 6);
+      ctx.fillStyle = '#F5E6CC';
+      ctx.fillRect(x + 10, y + 6, 22, 18);
 
-      // Mask
-      ctx.fillStyle = '#222';
-      ctx.fillRect(x + 35, y + 15, 15, 15);
-      
-      // Eye
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(x + 30, y + 10, 5, 5);
-      ctx.fillStyle = '#000';
-      ctx.fillRect(x + 32, y + 12, 2, 2);
+      // Ears
+      ctx.fillRect(x + 11, y - 10, 6, 16);
+      ctx.fillRect(x + 25, y - 10, 6, 16);
+      ctx.fillStyle = '#F8BBD0';
+      ctx.fillRect(x + 13, y - 8, 2, 12);
+      ctx.fillRect(x + 27, y - 8, 2, 12);
+
+      // Eyes + nose
+      ctx.fillStyle = '#111';
+      ctx.fillRect(x + 15, y + 12, 2, 2);
+      ctx.fillRect(x + 24, y + 12, 2, 2);
+      ctx.fillStyle = '#E57373';
+      ctx.fillRect(x + 20, y + 15, 2, 2);
     };
 
     const skinImage = new Image();
@@ -226,7 +216,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
       if (activeSkin.imageUrl && skinLoaded) {
         ctx.drawImage(skinImage, player.x, player.y, player.width, player.height);
       } else {
-        drawDefaultPug(player.x, player.y);
+        drawDefaultBunny(player.x, player.y);
       }
 
       // Draw active effect visuals
