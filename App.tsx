@@ -63,10 +63,10 @@ const App: React.FC = () => {
         {gameState !== GameState.PLAYING && (
           <div className="text-center mb-10 animate-bounce">
             <h1 className="text-4xl md:text-6xl text-[#FFEB3B] pixel-text mb-4 drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)]">
-              BUNNY'S TEA PARTY
+              PUKA'S TEA PARTY
             </h1>
             <p className="text-[#A5D6A7] text-sm md:text-lg">
-              Collect <b>Carrots</b>, jump on <b>Floating Trays</b>, and avoid the bees!
+              Collect Carrots, jump on <b>Floating Trays</b>, and avoid the bees!
             </p>
           </div>
         )}
