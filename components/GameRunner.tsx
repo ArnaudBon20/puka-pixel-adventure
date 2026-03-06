@@ -651,9 +651,9 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           ctx.translate(dx, dy);
       }
       
-      // Sky (fixed tone to avoid flicker when jumping)
+      // Sky (fixed and darker for stronger character contrast)
       const skyHue = (190 + (internalLevel * 10)) % 360; 
-      const lightness = 85;
+      const lightness = 72;
       ctx.fillStyle = `hsl(${skyHue}, 70%, ${lightness}%)`;
       ctx.fillRect(-10, -10, CANVAS_WIDTH + 20, CANVAS_HEIGHT + 20); // Oversize for shake
       
@@ -976,11 +976,11 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           <span className="text-white text-[8px] mt-1 bg-black/50 px-1">INVENTORY</span>
         </div>
       </div>
-      {showLevelUp && (
-        <div className="mt-2 text-center text-[#FFEB3B] text-xs md:text-sm pixel-text bg-black/35 p-2 rounded border border-[#FFEB3B]/40">
+      <div className="mt-2 h-10">
+        <div className={`text-center text-[#FFEB3B] text-xs md:text-sm pixel-text bg-black/35 p-2 rounded border border-[#FFEB3B]/40 transition-opacity ${showLevelUp ? 'opacity-100' : 'opacity-0'}`}>
           FASTER & HARDER!
         </div>
-      )}
+      </div>
     </div>
   );
 };
