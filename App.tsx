@@ -66,7 +66,7 @@ const App: React.FC = () => {
               BUNNY'S TEA PARTY
             </h1>
             <p className="text-[#A5D6A7] text-sm md:text-lg">
-              Collect <b>Biscuits</b>, jump on <b>Floating Trays</b>, and avoid the bees!
+              Collect <b>Carrots</b>, jump on <b>Floating Trays</b>, and avoid the bees!
             </p>
           </div>
         )}

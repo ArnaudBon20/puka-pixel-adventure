@@ -134,7 +134,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
 
     // Player State
     const player = {
-      x: 50,
+      x: 120,
       y: 300,
       width: 40,
       height: 40,
@@ -156,7 +156,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
 
     let obstacles: Obstacle[] = [];
     let platforms: Array<{ x: number, y: number, width: number, height: number }> = [];
-    let biscuits: Array<{ x: number, y: number, width: number, height: number, collected: boolean }> = [];
+    let carrots: Array<{ x: number, y: number, width: number, height: number, collected: boolean }> = [];
     let powerUps: Array<{ x: number, y: number, width: number, height: number, type: 'shield' | 'sugar' }> = [];
     let particles: Array<{ x: number, y: number, vx: number, vy: number, life: number, color: string, size: number }> = [];
     
@@ -177,31 +177,31 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
     // Helper: Draw Default Bunny
     const drawDefaultBunny = (x: number, y: number) => {
       // Bunny body
-      ctx.fillStyle = '#F5E6CC';
+      ctx.fillStyle = '#9EDCFF';
       ctx.fillRect(x + 8, y + 14, 26, 24);
 
       // Pink tutu
-      ctx.fillStyle = '#F48FB1';
+      ctx.fillStyle = '#9EDCFF';
       ctx.fillRect(x + 4, y + 28, 34, 10);
-      ctx.fillStyle = '#F8BBD0';
+      ctx.fillStyle = '#9EDCFF';
       ctx.fillRect(x + 3, y + 36, 36, 4);
 
       // Head
-      ctx.fillStyle = '#F5E6CC';
+      ctx.fillStyle = '#9EDCFF';
       ctx.fillRect(x + 10, y + 6, 22, 18);
 
       // Ears
       ctx.fillRect(x + 11, y - 10, 6, 16);
       ctx.fillRect(x + 25, y - 10, 6, 16);
-      ctx.fillStyle = '#F8BBD0';
+      ctx.fillStyle = '#9EDCFF';
       ctx.fillRect(x + 13, y - 8, 2, 12);
       ctx.fillRect(x + 27, y - 8, 2, 12);
 
       // Eyes + nose
-      ctx.fillStyle = '#111';
+      ctx.fillStyle = '#1E3A5F';
       ctx.fillRect(x + 15, y + 12, 2, 2);
       ctx.fillRect(x + 24, y + 12, 2, 2);
-      ctx.fillStyle = '#E57373';
+      ctx.fillStyle = '#1E3A5F';
       ctx.fillRect(x + 20, y + 15, 2, 2);
     };
 
@@ -257,7 +257,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
                  type: Math.random() > 0.6 ? 'sugar' : 'shield'
               });
            } else {
-               biscuits.push({
+               carrots.push({
                 x: CANVAS_WIDTH + xOffset + 40, 
                 y: yLevel - 40, 
                 width: 25,
@@ -324,7 +324,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         });
         
         if (Math.random() > 0.5) {
-           biscuits.push({
+           carrots.push({
             x: CANVAS_WIDTH + 10,
             y: 340, 
             width: 25,
@@ -345,7 +345,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
                type: Math.random() > 0.5 ? 'sugar' : 'shield'
              });
          } else {
-             biscuits.push({
+             carrots.push({
                 x: CANVAS_WIDTH,
                 y: 340,
                 width: 25,
@@ -486,9 +486,9 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         if (plat.x + plat.width < 0) platforms.splice(i, 1);
       }
 
-      // Biscuits
-      for (let i = biscuits.length - 1; i >= 0; i--) {
-        const b = biscuits[i];
+      // Carrots
+      for (let i = carrots.length - 1; i >= 0; i--) {
+        const b = carrots[i];
         b.x -= currentSpeed;
 
         if (!b.collected) {
@@ -501,14 +501,14 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
             b.collected = true;
             score += 50 * scoreMultiplier; // Apply Multiplier
             playSound('biscuit');
-            spawnParticles(b.x + b.width / 2, b.y + b.height / 2, '#8D6E63', 8, 1.5);
+            spawnParticles(b.x + b.width / 2, b.y + b.height / 2, '#FF9800', 8, 1.5);
             setCurrentScore(Math.floor(score));
           }
         }
         
         if (b.x + b.width < 0 || b.collected) {
-           if (b.collected) biscuits.splice(i, 1);
-           else if (b.x + b.width < 0) biscuits.splice(i, 1);
+           if (b.collected) carrots.splice(i, 1);
+           else if (b.x + b.width < 0) carrots.splice(i, 1);
         }
       }
 
@@ -665,22 +665,20 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         ctx.strokeRect(plat.x + 5, plat.y + 2, plat.width - 10, plat.height - 4);
       });
 
-      // Biscuits
-      biscuits.forEach(b => {
+      // Carrots
+      carrots.forEach(b => {
         if (b.collected) return;
-        ctx.fillStyle = '#D7CCC8'; 
+        ctx.fillStyle = '#FB8C00';
         ctx.beginPath();
-        ctx.arc(b.x + b.width/2, b.y + b.height/2, b.width/2, 0, Math.PI*2);
+        ctx.moveTo(b.x + b.width / 2, b.y + 3);
+        ctx.lineTo(b.x + 4, b.y + b.height - 2);
+        ctx.lineTo(b.x + b.width - 4, b.y + b.height - 2);
+        ctx.closePath();
         ctx.fill();
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = '#8D6E63';
-        ctx.stroke();
-        ctx.fillStyle = '#5D4037'; 
-        ctx.beginPath();
-        ctx.arc(b.x + 8, b.y + 10, 3, 0, Math.PI*2);
-        ctx.arc(b.x + 16, b.y + 8, 2, 0, Math.PI*2);
-        ctx.arc(b.x + 12, b.y + 18, 3, 0, Math.PI*2);
-        ctx.fill();
+        ctx.fillStyle = '#66BB6A';
+        ctx.fillRect(b.x + 10, b.y, 2, 6);
+        ctx.fillRect(b.x + 13, b.y - 1, 2, 6);
+        ctx.fillRect(b.x + 7, b.y - 1, 2, 6);
       });
 
       // Power Ups on Ground
@@ -875,7 +873,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
       >
         EXIT
       </button>
-      <div className="absolute bottom-2 left-4 text-white/70 text-[10px] md:text-xs pointer-events-none select-none drop-shadow-md bg-black/20 p-1 rounded text-left">
+      <div className="absolute top-16 right-4 text-white/80 text-[10px] md:text-xs pointer-events-none select-none drop-shadow-md bg-black/35 p-2 rounded text-left">
         <div>Space/Tap: Jump</div>
         <div>Enter/Tap Icon: Use Item</div>
         <div>Upper Path: <span className="text-[#FFEB3B]">3x Points!</span></div>
