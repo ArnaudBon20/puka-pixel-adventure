@@ -623,10 +623,9 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           ctx.translate(dx, dy);
       }
       
-      // Sky
+      // Sky (fixed tone to avoid flicker when jumping)
       const skyHue = (190 + (internalLevel * 10)) % 360; 
-      // Darker sky in upper dimension to signal "Deep Space" feel
-      const lightness = isUpperDimension ? 75 : 85; 
+      const lightness = 85;
       ctx.fillStyle = `hsl(${skyHue}, 70%, ${lightness}%)`;
       ctx.fillRect(-10, -10, CANVAS_WIDTH + 20, CANVAS_HEIGHT + 20); // Oversize for shake
       
@@ -641,11 +640,8 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
           }
       }
 
-      // Upper Dimension Indicator
+      // Upper Dimension Indicator (text only, no background tint)
       if (isUpperDimension) {
-          ctx.fillStyle = 'rgba(255, 235, 59, 0.1)';
-          ctx.fillRect(0, 0, CANVAS_WIDTH, UPPER_DIMENSION_Y);
-          
           // Draw "3x" floating text
           ctx.font = '20px "Press Start 2P"';
           ctx.fillStyle = `rgba(255, 215, 0, ${0.5 + Math.sin(frameCount * 0.2) * 0.5})`;
@@ -882,12 +878,12 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
         />
       
         {/* HUD */}
-        <div className="absolute top-4 left-4 flex gap-4 bg-[#3E2723]/90 p-2 rounded border-2 border-[#D7CCC8]">
-          <div className="text-white text-sm md:text-xl pixel-text">
+        <div className="absolute top-2 left-2 md:top-4 md:left-4 flex gap-2 md:gap-4 bg-[#3E2723]/90 p-1.5 md:p-2 rounded border border-[#D7CCC8] md:border-2">
+          <div className="text-white text-[10px] md:text-xl pixel-text">
             PTS: <span className="text-[#FFEB3B]">{currentScore}</span>
           </div>
           <div className="w-0.5 bg-[#D7CCC8]"></div>
-          <div className="text-white text-sm md:text-xl pixel-text">
+          <div className="text-white text-[10px] md:text-xl pixel-text">
             LVL: <span className="text-[#F06292]">{currentLevel}</span>
           </div>
         </div>
@@ -903,7 +899,7 @@ export const GameRunner: React.FC<GameRunnerProps> = ({ activeSkin, onGameOver, 
 
         <button
           onClick={onBack}
-          className="absolute top-4 right-4 bg-[#D84315] hover:bg-[#BF360C] text-white text-xs py-2 px-4 rounded border-b-4 border-[#870000] active:border-b-0 active:mt-1 font-bold shadow-lg"
+          className="absolute top-2 right-2 md:top-4 md:right-4 bg-[#D84315] hover:bg-[#BF360C] text-white text-[10px] md:text-xs py-1.5 px-2.5 md:py-2 md:px-4 rounded border-b-2 md:border-b-4 border-[#870000] active:border-b-0 active:mt-1 font-bold shadow-lg"
         >
           EXIT
         </button>
