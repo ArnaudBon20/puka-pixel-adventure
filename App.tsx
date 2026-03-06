@@ -54,7 +54,7 @@ const App: React.FC = () => {
         console.warn('Failed to save to local storage', e);
       }
     }
-    setGameState(GameState.GAME_OVER);
+    setGameState(GameState.MENU);
   };
 
   return (
@@ -129,37 +129,6 @@ const App: React.FC = () => {
             onGameOver={handleGameOver}
             onBack={() => setGameState(GameState.MENU)}
           />
-        )}
-
-        {/* --- GAME OVER --- */}
-        {gameState === GameState.GAME_OVER && (
-          <div className="text-center bg-[#2E7D32] p-10 rounded-lg border-4 border-[#1B5E20] shadow-2xl animate-fade-in-up mx-auto max-w-lg">
-            <h2 className="text-4xl text-[#FFCDD2] mb-6 pixel-text">TEA SPILLED!</h2>
-            <div className="text-white text-2xl mb-8">
-              PARTY POINTS: <span className="text-[#FFEB3B]">{lastScore}</span>
-            </div>
-
-            {!isCreatorUnlocked && lastScore < UNLOCK_SCORE && (
-               <div className="text-sm text-[#81C784] mb-6 bg-black/20 p-2 rounded">
-                 Score {UNLOCK_SCORE - lastScore} more to unlock Custom Skins!
-               </div>
-            )}
-            
-            <div className="flex gap-4 justify-center">
-               <button
-                onClick={() => setGameState(GameState.MENU)}
-                className="bg-[#558B2F] hover:bg-[#33691E] text-white py-3 px-6 rounded border-b-4 border-[#1B5E20] active:border-b-0 active:mt-1 font-bold pixel-text"
-              >
-                MENU
-              </button>
-              <button
-                onClick={() => setGameState(GameState.PLAYING)}
-                className="bg-[#F06292] hover:bg-[#EC407A] text-white py-3 px-6 rounded border-b-4 border-[#880E4F] active:border-b-0 active:mt-1 font-bold pixel-text"
-              >
-                TRY AGAIN
-              </button>
-            </div>
-          </div>
         )}
 
       </div>
