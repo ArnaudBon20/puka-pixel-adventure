@@ -16,6 +16,7 @@ Modifications principales dans ce fork :
 ## Jouer en ligne
 
 - GitHub Pages : [arnaudbon20.github.io/puka-pixel-adventure](https://arnaudbon20.github.io/puka-pixel-adventure/)
+- Super Blue Bunny Bros : [arnaudbon20.github.io/puka-pixel-adventure/super-bunny-bros/](https://arnaudbon20.github.io/puka-pixel-adventure/super-bunny-bros/)
 
 ## Jeux inclus
 
@@ -35,6 +36,13 @@ Modifications principales dans ce fork :
   - `1` : pelote
   - `2` : jouet
 
+### 3. Super Blue Bunny Bros (`super-bunny-bros/`)
+- Genre : platformer 2D side-scroller (inspire de Mario)
+- But : aller jusqu'au drapeau, collecter des pieces et eviter les ennemis
+- Controles :
+  - `Fleches` / `Q,D` : deplacement
+  - `Espace` / `Z` / `W` : saut
+
 ## Lancer en local
 
 Prérequis : Node.js 18+ et npm.
@@ -48,6 +56,13 @@ npm run dev
 ```bash
 # Jeu garden-mystery
 cd garden-mystery
+npm install
+npm run dev
+```
+
+```bash
+# Jeu super-bunny-bros
+cd super-bunny-bros
 npm install
 npm run dev
 ```

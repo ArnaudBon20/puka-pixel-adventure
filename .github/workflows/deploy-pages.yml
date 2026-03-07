@@ -41,12 +41,21 @@ jobs:
         working-directory: garden-mystery
         run: npm run build -- --base=/puka-pixel-adventure/puka-garden-mystery/
 
+      - name: Install Super Bunny dependencies
+        working-directory: super-bunny-bros
+        run: npm install --no-audit --no-fund
+
+      - name: Build Super Blue Bunny Bros
+        working-directory: super-bunny-bros
+        run: npm run build -- --base=/puka-pixel-adventure/super-bunny-bros/
+
       - name: Assemble Pages artifact
         run: |
           rm -rf public-site
-          mkdir -p public-site/puka-garden-mystery
+          mkdir -p public-site/puka-garden-mystery public-site/super-bunny-bros
           cp -R dist/* public-site/
           cp -R garden-mystery/dist/* public-site/puka-garden-mystery/
+          cp -R super-bunny-bros/dist/* public-site/super-bunny-bros/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

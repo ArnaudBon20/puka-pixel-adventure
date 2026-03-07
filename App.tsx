@@ -57,6 +57,8 @@ const App: React.FC = () => {
     setGameState(GameState.MENU);
   };
 
+  const basePath = window.location.pathname.includes('/puka-pixel-adventure/') ? '/puka-pixel-adventure' : '';
+
   return (
     <div className="min-h-screen bg-[#1b2e1b] flex items-center justify-center p-4">
       <div className="w-full max-w-5xl">
@@ -119,6 +121,13 @@ const App: React.FC = () => {
                 BESTE PARTY-PUNKTE: {highScore}
               </div>
             )}
+
+            <a
+              href={`${basePath}/super-bunny-bros/`}
+              className="bg-[#42A5F5] hover:bg-[#1E88E5] text-white text-sm md:text-base py-3 px-6 rounded border-b-4 border-[#0D47A1] active:border-b-0 active:mt-1 font-bold shadow-xl pixel-text transition-all"
+            >
+              SUPER BLUE BUNNY BROS
+            </a>
           </div>
         )}
 
