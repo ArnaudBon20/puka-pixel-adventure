@@ -34,8 +34,9 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
              <button onClick={onRestart} className="p-2 hover:bg-[#1B5E20] rounded border border-[#558B2F]" title="Level neu starten">
                 <RotateCcw size={20} />
              </button>
-             <button onClick={onHome} className="p-2 hover:bg-[#1B5E20] rounded border border-[#558B2F]" title="Zum Menue">
+             <button onClick={onHome} className="px-2 py-2 hover:bg-[#1B5E20] rounded border border-[#558B2F] text-[10px] inline-flex items-center gap-1" title="Tous les jeux">
                 <Home size={20} />
+                <span>Tous les jeux</span>
              </button>
         </div>
       </div>

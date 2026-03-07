@@ -35,6 +35,7 @@ const INITIAL_GAME_STATE: GameState = {
 };
 
 const App: React.FC = () => {
+  const basePath = window.location.pathname.includes('/puka-pixel-adventure/') ? '/puka-pixel-adventure' : '';
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
   const [playerPos, setPlayerPos] = useState<Position>({ x: 0, y: 0 });
   const [playerDirection, setPlayerDirection] = useState<Position>({ x: 1, y: 0 });
@@ -121,6 +122,10 @@ const App: React.FC = () => {
       messages: [...prev.messages, "Vom blonden Jungen erwischt! Oh nein!"]
     }));
   }, []);
+
+  const goToMainMenu = useCallback(() => {
+    window.location.href = `${basePath}/`;
+  }, [basePath]);
 
   const useItem = useCallback((type: 'yarn' | 'toy') => {
     if (!gameState.isPlaying) return;
@@ -387,6 +392,12 @@ const App: React.FC = () => {
                         <Play size={18} /> Spielen {level.name}
                     </button>
                 ))}
+                <button
+                    onClick={goToMainMenu}
+                    className="w-full py-3 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px] shadow transition-all"
+                >
+                    Retour menu des jeux
+                </button>
             </div>
         </div>
       ) : (
@@ -397,7 +408,7 @@ const App: React.FC = () => {
                 currentLevel={levelConfig} 
                 treatsLeft={treats.filter(t => !t.collected).length} 
                 onRestart={() => startLevel(gameState.levelIndex)}
-                onHome={() => setGameState(INITIAL_GAME_STATE)}
+                onHome={goToMainMenu}
                 isSniffing={isSniffing}
                 moveCount={moveCount}
              />
@@ -424,14 +435,30 @@ const App: React.FC = () => {
                                     <h2 className="text-2xl pixel-text mb-2 text-[#FFEB3B]">Leckerer Sieg!</h2>
                                     <p className="mb-6">Du hast alle Snacks gefunden!</p>
                                     {gameState.levelIndex < LEVELS.length - 1 ? (
-                                        <button 
-                                            onClick={() => startLevel(gameState.levelIndex + 1)}
-                                            className="px-6 py-2 bg-[#66BB6A] hover:bg-[#4CAF50] text-white rounded border-b-4 border-[#1B5E20] active:border-b-0 active:mt-[2px]"
-                                        >
-                                            Naechster Garten &rarr;
-                                        </button>
+                                        <div className="flex flex-col gap-3 items-center">
+                                            <button 
+                                                onClick={() => startLevel(gameState.levelIndex + 1)}
+                                                className="px-6 py-2 bg-[#66BB6A] hover:bg-[#4CAF50] text-white rounded border-b-4 border-[#1B5E20] active:border-b-0 active:mt-[2px]"
+                                            >
+                                                Naechster Garten &rarr;
+                                            </button>
+                                            <button
+                                                onClick={goToMainMenu}
+                                                className="px-6 py-2 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px]"
+                                            >
+                                                Tous les jeux
+                                            </button>
+                                        </div>
                                     ) : (
-                                        <p className="text-lg text-[#FFEB3B] pixel-text">Du hast alle Gaerten geschafft!</p>
+                                        <div className="flex flex-col gap-3 items-center">
+                                            <p className="text-lg text-[#FFEB3B] pixel-text">Du hast alle Gaerten geschafft!</p>
+                                            <button
+                                                onClick={goToMainMenu}
+                                                className="px-6 py-2 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px]"
+                                            >
+                                                Tous les jeux
+                                            </button>
+                                        </div>
                                     )}
                                 </>
                             ) : (
@@ -442,12 +469,20 @@ const App: React.FC = () => {
                                     </div>
                                     <h2 className="text-2xl pixel-text text-[#FFEB3B] mb-2">Erwischt!</h2>
                                     <p className="mb-6">Der blonde Junge hat dich entdeckt.</p>
-                                    <button 
-                                        onClick={() => startLevel(gameState.levelIndex)}
-                                        className="px-6 py-2 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px]"
-                                    >
-                                        Nochmal
-                                    </button>
+                                    <div className="flex flex-col gap-3 items-center">
+                                        <button 
+                                            onClick={() => startLevel(gameState.levelIndex)}
+                                            className="px-6 py-2 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px]"
+                                        >
+                                            Nochmal
+                                        </button>
+                                        <button
+                                            onClick={goToMainMenu}
+                                            className="px-6 py-2 bg-[#1B5E20] hover:bg-[#2E7D32] text-white rounded border-b-4 border-[#0D3B10] active:border-b-0 active:mt-[2px]"
+                                        >
+                                            Tous les jeux
+                                        </button>
+                                    </div>
                                 </>
                             )}
                         </div>
