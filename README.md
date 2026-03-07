@@ -39,6 +39,7 @@ Modifications principales dans ce fork :
 ### 3. Super Blue Bunny Bros (`super-bunny-bros/`)
 - Genre : platformer 2D side-scroller (inspire de Mario)
 - But : aller jusqu'au drapeau, collecter des pieces et eviter les ennemis
+- Variantes jouables : `SuperMarioBros-v0` et `SuperMarioBros2-v0` (avec lapin bleu)
 - Controles :
   - `Fleches` / `Q,D` : deplacement
   - `Espace` / `Z` / `W` : saut
