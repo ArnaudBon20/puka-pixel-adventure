@@ -22,6 +22,7 @@ const MAMA_PUKA_SKIN: PugSkin = {
 };
 
 const App: React.FC = () => {
+  const [isHome, setIsHome] = useState(true);
   const [gameState, setGameState] = useState<GameState>(GameState.MENU);
   const [skins, setSkins] = useState<PugSkin[]>([DEFAULT_SKIN, BABY_PUKA_SKIN, MAMA_PUKA_SKIN]);
   const [activeSkinId, setActiveSkinId] = useState<string>('default');
@@ -44,6 +45,16 @@ const App: React.FC = () => {
     setGameState(GameState.PLAYING);
   };
 
+  const handleOpenRunner = () => {
+    setIsHome(false);
+    setGameState(GameState.MENU);
+  };
+
+  const handleBackToHome = () => {
+    setGameState(GameState.MENU);
+    setIsHome(true);
+  };
+
   const handleGameOver = (score: number) => {
     setLastScore(score);
     if (score > highScore) {
@@ -64,20 +75,67 @@ const App: React.FC = () => {
       <div className="w-full max-w-5xl">
         
         {/* Header/Title */}
-        {gameState !== GameState.PLAYING && (
+        {gameState !== GameState.PLAYING && isHome && (
           <div className="text-center mb-10 animate-bounce">
             <h1 className="text-4xl md:text-6xl text-[#FFEB3B] pixel-text mb-4 drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)]">
-              PUKAS PARTY
+              Puka&apos;s Party
             </h1>
             <p className="text-[#A5D6A7] text-sm md:text-lg">
-              Sammle Karotten, springe auf <b>schwebende Tabletts</b> und weiche den Bienen aus!
+              Choisis un jeu et pars a l&apos;aventure avec Puka.
             </p>
           </div>
         )}
 
+        {/* --- HOME --- */}
+        {isHome && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
+              <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Puka&apos;s Party</h2>
+              <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
+                Endless runner: saute, esquive et fais le meilleur score avec ton lapin.
+              </p>
+              <button
+                onClick={handleOpenRunner}
+                className="mt-auto bg-[#F06292] hover:bg-[#EC407A] text-white text-sm py-3 px-4 rounded border-b-4 border-[#880E4F] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
+              >
+                JOUER
+              </button>
+            </div>
+
+            <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
+              <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Garden Mystery</h2>
+              <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
+                Infiltration strategique: recupere les friandises sans te faire attraper.
+              </p>
+              <a
+                href={`${basePath}/puka-garden-mystery/`}
+                className="mt-auto inline-flex justify-center bg-[#66BB6A] hover:bg-[#4CAF50] text-white text-sm py-3 px-4 rounded border-b-4 border-[#1B5E20] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
+              >
+                JOUER
+              </a>
+            </div>
+
+            <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
+              <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Super Blue Bunny Bros</h2>
+              <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
+                Platformer mario-like en lapin bleu, jouable clavier et iPhone.
+              </p>
+              <a
+                href={`${basePath}/super-bunny-bros/`}
+                className="mt-auto inline-flex justify-center bg-[#42A5F5] hover:bg-[#1E88E5] text-white text-sm py-3 px-4 rounded border-b-4 border-[#0D47A1] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
+              >
+                JOUER
+              </a>
+            </div>
+          </div>
+        )}
+
         {/* --- MAIN MENU --- */}
-        {gameState === GameState.MENU && (
+        {!isHome && gameState === GameState.MENU && (
           <div className="flex flex-col items-center gap-8">
+            <h1 className="text-3xl md:text-5xl text-[#FFEB3B] pixel-text drop-shadow-[4px_4px_0_rgba(0,0,0,0.5)] text-center">
+              Puka&apos;s Party
+            </h1>
             
             <div className="bg-[#2E7D32] p-6 rounded-lg border-4 border-[#1B5E20] shadow-xl w-full max-w-md">
               <h2 className="text-[#E8F5E9] text-xl mb-4 text-center pixel-text">GAST WAHLEN</h2>
@@ -122,12 +180,12 @@ const App: React.FC = () => {
               </div>
             )}
 
-            <a
-              href={`${basePath}/super-bunny-bros/`}
-              className="bg-[#42A5F5] hover:bg-[#1E88E5] text-white text-sm md:text-base py-3 px-6 rounded border-b-4 border-[#0D47A1] active:border-b-0 active:mt-1 font-bold shadow-xl pixel-text transition-all"
+            <button
+              onClick={handleBackToHome}
+              className="bg-[#546E7A] hover:bg-[#455A64] text-white text-sm md:text-base py-3 px-6 rounded border-b-4 border-[#263238] active:border-b-0 active:mt-1 font-bold shadow-xl pixel-text transition-all"
             >
-              SUPER BLUE BUNNY BROS
-            </a>
+              ACCUEIL DES JEUX
+            </button>
           </div>
         )}
 
