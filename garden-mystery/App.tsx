@@ -361,20 +361,20 @@ const App: React.FC = () => {
 
   // Rendering
   return (
-    <div className="min-h-screen bg-earth flex items-center justify-center p-4 font-serif">
+    <div className="min-h-screen bg-[#1b2e1b] flex items-center justify-center p-4">
       {!gameState.isPlaying && !gameState.isGameOver ? (
         // Main Menu
-        <div className="max-w-md w-full bg-paper p-8 rounded-lg border-8 border-ink shadow-2xl text-center">
-            <h1 className="text-4xl font-bold text-ink mb-4 flex flex-col items-center gap-2">
-                <Crown size={48} className="text-rose-400" />
-                <span>Puka Garten</span>
-                <span className="text-2xl text-earth italic">Geheimnis</span>
+        <div className="max-w-xl w-full bg-[#2E7D32] p-8 rounded-lg border-4 border-[#1B5E20] shadow-2xl text-center">
+            <h1 className="text-3xl md:text-5xl text-[#FFEB3B] pixel-text mb-6 flex flex-col items-center gap-4">
+                <Crown size={40} className="text-[#F06292]" />
+                <span>Puka&apos;s Party</span>
+                <span className="text-base md:text-xl text-[#E8F5E9]">Garden Mystery</span>
             </h1>
-            <div className="mb-6 text-left space-y-2 bg-stone-100 p-4 rounded border border-stone-300">
-                <p><strong>Ziel:</strong> Sammle alle Karotten, ohne vom blonden Jungen erwischt zu werden!</p>
-                <p><strong>Steuerung:</strong> D-Pad oder Pfeiltasten.</p>
+            <div className="mb-6 text-left space-y-3 bg-[#1B5E20] p-4 rounded border-2 border-[#558B2F] text-[#E8F5E9] text-xs leading-6">
+                <p><strong>Ziel:</strong> Sammle alle Karotten, ohne vom blonden Jungen erwischt zu werden.</p>
+                <p><strong>Steuerung:</strong> D-Pad tactile ou fleches clavier.</p>
                 <p><strong>Schonzeit:</strong> Der Junge wartet 5 Zuege.</p>
-                <p><strong>Schnueffeln:</strong> Taste halten oder LEERTASTE.</p>
+                <p><strong>Schnueffeln:</strong> Maintenir le bouton ou LEERTASTE.</p>
                 <p><strong>Objekte:</strong> Garn zur Ablenkung, Quietschspielzeug zum Betaeuben.</p>
             </div>
             <div className="space-y-4">
@@ -382,7 +382,7 @@ const App: React.FC = () => {
                     <button 
                         key={level.id}
                         onClick={() => startLevel(idx)}
-                        className="w-full py-3 bg-sage hover:bg-green-600 text-white font-bold rounded shadow transition-transform hover:scale-105 flex items-center justify-center gap-2"
+                        className="w-full py-3 bg-[#F06292] hover:bg-[#EC407A] text-white rounded border-b-4 border-[#880E4F] active:border-b-0 active:mt-[2px] shadow transition-all flex items-center justify-center gap-2"
                     >
                         <Play size={18} /> Spielen {level.name}
                     </button>
@@ -417,21 +417,21 @@ const App: React.FC = () => {
                 
                 {gameState.isGameOver && (
                     <div className="absolute inset-0 bg-black/60 flex items-center justify-center backdrop-blur-sm rounded-lg z-50">
-                        <div className="bg-paper p-8 rounded border-4 border-ink text-center max-w-sm">
+                        <div className="bg-[#2E7D32] p-8 rounded border-4 border-[#1B5E20] text-center max-w-sm text-[#E8F5E9]">
                             {gameState.gameWon ? (
                                 <>
                                     <Crown size={64} className="mx-auto text-yellow-500 mb-4 animate-bounce" />
-                                    <h2 className="text-3xl font-bold text-ink mb-2">Leckerer Sieg!</h2>
+                                    <h2 className="text-2xl pixel-text mb-2 text-[#FFEB3B]">Leckerer Sieg!</h2>
                                     <p className="mb-6">Du hast alle Snacks gefunden!</p>
                                     {gameState.levelIndex < LEVELS.length - 1 ? (
                                         <button 
                                             onClick={() => startLevel(gameState.levelIndex + 1)}
-                                            className="px-6 py-2 bg-rose-400 hover:bg-rose-500 text-white rounded-full font-bold shadow"
+                                            className="px-6 py-2 bg-[#66BB6A] hover:bg-[#4CAF50] text-white rounded border-b-4 border-[#1B5E20] active:border-b-0 active:mt-[2px]"
                                         >
                                             Naechster Garten &rarr;
                                         </button>
                                     ) : (
-                                        <p className="text-xl font-bold text-rose-600">Du hast alle Gaerten geschafft!</p>
+                                        <p className="text-lg text-[#FFEB3B] pixel-text">Du hast alle Gaerten geschafft!</p>
                                     )}
                                 </>
                             ) : (
@@ -440,11 +440,11 @@ const App: React.FC = () => {
                                         <span className="text-6xl">👱‍♂️</span>
                                         <Frown size={32} className="text-stone-600 -ml-2 mt-8" />
                                     </div>
-                                    <h2 className="text-3xl font-bold text-ink mb-2">Erwischt!</h2>
+                                    <h2 className="text-2xl pixel-text text-[#FFEB3B] mb-2">Erwischt!</h2>
                                     <p className="mb-6">Der blonde Junge hat dich entdeckt.</p>
                                     <button 
                                         onClick={() => startLevel(gameState.levelIndex)}
-                                        className="px-6 py-2 bg-earth hover:bg-stone-700 text-white rounded-full font-bold shadow"
+                                        className="px-6 py-2 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px]"
                                     >
                                         Nochmal
                                     </button>

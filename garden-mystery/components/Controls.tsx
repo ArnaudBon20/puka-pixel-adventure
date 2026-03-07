@@ -21,7 +21,7 @@ const Controls: React.FC<ControlsProps> = ({
   toyCount,
   isSniffing
 }) => {
-  const btnClass = "bg-paper border-2 border-ink rounded-lg active:bg-stone-300 shadow-md touch-manipulation flex items-center justify-center transition-transform active:scale-95";
+  const btnClass = "bg-[#2E7D32] border-2 border-[#1B5E20] rounded-lg active:bg-[#1B5E20] shadow-md touch-manipulation flex items-center justify-center transition-transform active:scale-95 text-[#E8F5E9]";
 
   return (
     <div className="w-full max-w-2xl mt-4 px-4 flex justify-between items-end gap-4 select-none">
@@ -32,7 +32,7 @@ const Controls: React.FC<ControlsProps> = ({
           className={clsx(btnClass, "h-12")}
           onPointerDown={(e) => { e.preventDefault(); onMove(0, -1); }}
         >
-          <ChevronUp size={28} className="text-ink" />
+          <ChevronUp size={28} className="text-[#E8F5E9]" />
         </button>
         <div />
         
@@ -40,19 +40,19 @@ const Controls: React.FC<ControlsProps> = ({
           className={clsx(btnClass, "h-12")}
           onPointerDown={(e) => { e.preventDefault(); onMove(-1, 0); }}
         >
-          <ChevronLeft size={28} className="text-ink" />
+          <ChevronLeft size={28} className="text-[#E8F5E9]" />
         </button>
         <button 
-          className={clsx(btnClass, "h-12 bg-stone-200")} // Center dummy
+          className={clsx(btnClass, "h-12 bg-[#1B5E20]")} // Center dummy
           disabled
         >
-          <div className="w-2 h-2 bg-stone-400 rounded-full" />
+          <div className="w-2 h-2 bg-[#81C784] rounded-full" />
         </button>
         <button 
           className={clsx(btnClass, "h-12")}
           onPointerDown={(e) => { e.preventDefault(); onMove(1, 0); }}
         >
-          <ChevronRight size={28} className="text-ink" />
+          <ChevronRight size={28} className="text-[#E8F5E9]" />
         </button>
         
         <div />
@@ -60,7 +60,7 @@ const Controls: React.FC<ControlsProps> = ({
           className={clsx(btnClass, "h-12")}
           onPointerDown={(e) => { e.preventDefault(); onMove(0, 1); }}
         >
-          <ChevronDown size={28} className="text-ink" />
+          <ChevronDown size={28} className="text-[#E8F5E9]" />
         </button>
         <div />
       </div>
@@ -69,13 +69,13 @@ const Controls: React.FC<ControlsProps> = ({
       <div className="flex flex-col gap-3 pb-2">
          <div className="flex gap-3">
             <button 
-                className={clsx(btnClass, "w-16 h-16 flex-col gap-1", isSniffing && "bg-pink-100 border-pink-400")}
+                className={clsx(btnClass, "w-16 h-16 flex-col gap-1", isSniffing && "bg-[#F8BBD0] border-[#F06292]")}
                 onPointerDown={(e) => { e.preventDefault(); onSniffStart(); }}
                 onPointerUp={(e) => { e.preventDefault(); onSniffEnd(); }}
                 onPointerLeave={(e) => { e.preventDefault(); onSniffEnd(); }}
             >
-                <Search size={24} className={isSniffing ? "text-pink-600" : "text-ink"} />
-                <span className="text-[10px] font-bold uppercase">Schnueffeln</span>
+                <Search size={24} className={isSniffing ? "text-[#880E4F]" : "text-[#E8F5E9]"} />
+                <span className="text-[9px] uppercase">Schnueffeln</span>
             </button>
          </div>
          <div className="flex gap-3">
@@ -85,7 +85,7 @@ const Controls: React.FC<ControlsProps> = ({
                 disabled={yarnCount === 0}
              >
                 <div className="w-4 h-4 bg-rose-400 rounded-full border border-rose-600 shadow-sm" />
-                <span className="text-[10px] font-bold text-rose-800">Garn ({yarnCount})</span>
+                <span className="text-[9px] text-[#E8F5E9]">Garn ({yarnCount})</span>
              </button>
              <button 
                 className={clsx(btnClass, "w-14 h-14 flex-col gap-0.5", toyCount === 0 && "opacity-50")}
@@ -93,7 +93,7 @@ const Controls: React.FC<ControlsProps> = ({
                 disabled={toyCount === 0}
              >
                 <div className="w-4 h-4 bg-yellow-400 rounded-md border border-yellow-600 shadow-sm" />
-                <span className="text-[10px] font-bold text-yellow-800">Spielz. ({toyCount})</span>
+                <span className="text-[9px] text-[#E8F5E9]">Spielz. ({toyCount})</span>
              </button>
          </div>
       </div>

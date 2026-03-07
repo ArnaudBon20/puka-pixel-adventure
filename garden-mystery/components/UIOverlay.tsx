@@ -24,17 +24,17 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
   const movesUntilActive = Math.max(0, 5 - moveCount);
 
   return (
-    <div className="w-full max-w-2xl bg-paper border-2 border-ink p-4 rounded-lg shadow-xl font-serif text-ink mb-4 flex flex-col gap-2">
-      <div className="flex justify-between items-center border-b border-stone-300 pb-2">
+    <div className="w-full max-w-2xl bg-[#2E7D32] border-4 border-[#1B5E20] p-4 rounded-lg shadow-xl text-[#E8F5E9] mb-4 flex flex-col gap-2">
+      <div className="flex justify-between items-center border-b border-[#558B2F] pb-2">
         <div>
-          <h2 className="text-xl font-bold">{currentLevel.name}</h2>
-          <p className="text-sm italic opacity-80">{currentLevel.description}</p>
+          <h2 className="text-base md:text-lg pixel-text">{currentLevel.name}</h2>
+          <p className="text-xs opacity-80 mt-1">{currentLevel.description}</p>
         </div>
         <div className="flex gap-2">
-             <button onClick={onRestart} className="p-2 hover:bg-stone-200 rounded-full" title="Level neu starten">
+             <button onClick={onRestart} className="p-2 hover:bg-[#1B5E20] rounded border border-[#558B2F]" title="Level neu starten">
                 <RotateCcw size={20} />
              </button>
-             <button onClick={onHome} className="p-2 hover:bg-stone-200 rounded-full" title="Zum Menue">
+             <button onClick={onHome} className="p-2 hover:bg-[#1B5E20] rounded border border-[#558B2F]" title="Zum Menue">
                 <Home size={20} />
              </button>
         </div>
@@ -61,12 +61,12 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
 
         <div className="flex items-center gap-2">
             {movesUntilActive > 0 ? (
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full text-sm font-bold bg-blue-100 border border-blue-300 text-blue-800">
+                <div className="flex items-center gap-2 px-3 py-1 rounded text-[10px] bg-[#90CAF9] border border-[#42A5F5] text-[#0D47A1]">
                     <span>👱‍♂️</span>
                     <span>Junge wartet: {movesUntilActive}</span>
                 </div>
             ) : (
-                <div className={`px-3 py-1 rounded-full text-sm font-bold border ${isSniffing ? 'bg-pink-200 border-pink-400 text-pink-900 animate-pulse' : 'bg-stone-200 border-stone-300 text-stone-500'}`}>
+                <div className={`px-3 py-1 rounded text-[10px] border ${isSniffing ? 'bg-[#F8BBD0] border-[#F06292] text-[#880E4F] animate-pulse' : 'bg-[#1B5E20] border-[#558B2F] text-[#C8E6C9]'}`}>
                     {isSniffing ? 'SCHNUEFFELN...' : 'LEERTASTE HALTEN ZUM SCHNUEFFELN'}
                 </div>
             )}
@@ -74,7 +74,7 @@ const UIOverlay: React.FC<UIOverlayProps> = ({
       </div>
 
       {gameState.messages.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 p-2 text-center text-amber-900 text-sm rounded animate-fade-in-up">
+        <div className="bg-[#1B5E20] border border-[#558B2F] p-2 text-center text-[#E8F5E9] text-xs rounded animate-fade-in-up">
            {gameState.messages[gameState.messages.length - 1]}
         </div>
       )}

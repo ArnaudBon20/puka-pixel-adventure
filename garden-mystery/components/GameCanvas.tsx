@@ -144,7 +144,7 @@ const GameCanvas: React.FC<GameCanvasProps> = ({
   return (
     <div 
       className={clsx(
-        "relative bg-stone-100 shadow-2xl rounded-lg overflow-hidden border-4 border-stone-800 transition-transform",
+        "relative bg-[#1B5E20] shadow-2xl rounded-lg overflow-hidden border-4 border-[#0D3B10] transition-transform",
         isShaking && "animate-shake"
       )}
       style={{ width: width * TILE_SIZE, height: height * TILE_SIZE }}

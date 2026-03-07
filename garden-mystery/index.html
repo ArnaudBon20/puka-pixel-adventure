@@ -5,21 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Puka Garden Mystery</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: {
-              serif: ['"Crimson Text"', 'serif'],
-            },
             colors: {
-              paper: '#f4f1ea',
-              ink: '#4a4036',
-              sage: '#8fbc8f',
-              rose: '#d8bfd8',
-              'rose-dark': '#b08db0',
-              earth: '#8b4513',
+              garden: '#1a2f1a',
+              'garden-panel': '#2E7D32',
+              'garden-deep': '#1B5E20',
+              'garden-accent': '#FFEB3B',
+              'garden-soft': '#A5D6A7',
             },
             animation: {
               'bounce-slow': 'bounce 3s infinite',
@@ -40,20 +36,24 @@
     </script>
     <style>
       body {
-        background-color: #2c2c2c;
+        font-family: 'Press Start 2P', cursive;
+        background-color: #1a2f1a;
+        color: #f3f3f3;
         margin: 0;
-        overflow: hidden; /* Prevent scrolling during game */
+        overflow: hidden;
         touch-action: none;
       }
-      /* Custom scrollbar for menu */
-      .vintage-scroll::-webkit-scrollbar {
+      .pixel-text {
+        text-shadow: 2px 2px 0px #000;
+      }
+      ::-webkit-scrollbar {
         width: 8px;
       }
-      .vintage-scroll::-webkit-scrollbar-track {
-        background: #f4f1ea;
+      ::-webkit-scrollbar-track {
+        background: #1B5E20;
       }
-      .vintage-scroll::-webkit-scrollbar-thumb {
-        background: #8fbc8f;
+      ::-webkit-scrollbar-thumb {
+        background: #66BB6A;
         border-radius: 4px;
       }
     </style>
