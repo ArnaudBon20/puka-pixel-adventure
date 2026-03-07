@@ -4,6 +4,14 @@ type Variant = 'SuperMarioBros-v0' | 'SuperMarioBros2-v0';
 type Platform = { x: number; y: number; w: number; h: number; style?: 'ground' | 'brick' | 'pipe' };
 type Coin = { x: number; y: number; r: number; collected: boolean };
 type Enemy = { x: number; y: number; w: number; h: number; vx: number; minX: number; maxX: number; alive: boolean };
+type Physics = {
+  gravity: number;
+  moveSpeed: number;
+  jumpSpeed: number;
+  drag: number;
+  stompBounce: number;
+  coinValue: number;
+};
 type Level = {
   worldWidth: number;
   winX: number;
@@ -16,9 +24,6 @@ type Level = {
 
 const WIDTH = 960;
 const HEIGHT = 540;
-const GRAVITY = 0.8;
-const MOVE_SPEED = 4.4;
-const JUMP_SPEED = -15;
 const MAX_LIVES = 3;
 
 const clamp = (value: number, min: number, max: number): number => Math.max(min, Math.min(max, value));
@@ -27,6 +32,28 @@ const intersects = (
   a: { x: number; y: number; w: number; h: number },
   b: { x: number; y: number; w: number; h: number }
 ): boolean => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+
+const buildPhysics = (variant: Variant): Physics => {
+  if (variant === 'SuperMarioBros2-v0') {
+    return {
+      gravity: 0.58,
+      moveSpeed: 5.2,
+      jumpSpeed: -13.4,
+      drag: 0.86,
+      stompBounce: -11,
+      coinValue: 40
+    };
+  }
+
+  return {
+    gravity: 0.82,
+    moveSpeed: 4.2,
+    jumpSpeed: -15.2,
+    drag: 0.76,
+    stompBounce: -9,
+    coinValue: 25
+  };
+};
 
 const buildLevel = (variant: Variant): Level => {
   if (variant === 'SuperMarioBros2-v0') {
@@ -139,6 +166,7 @@ const buildLevel = (variant: Variant): Level => {
 
 const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const touchInputRef = useRef({ left: false, right: false, jump: false });
   const [variant, setVariant] = useState<Variant>('SuperMarioBros-v0');
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(MAX_LIVES);
@@ -149,8 +177,12 @@ const App: React.FC = () => {
   const statusText = useMemo(() => {
     if (won) return `${variant}: niveau termine, lapin bleu victorieux.`;
     if (gameOver) return `${variant}: perdu, relance la partie.`;
-    return `${variant} | Fleches: bouger | Espace: sauter`;
+    return `${variant} | Clavier: fleches + espace | iPhone: boutons tactiles`;
   }, [gameOver, won, variant]);
+
+  const setTouchInput = (key: 'left' | 'right' | 'jump', pressed: boolean): void => {
+    touchInputRef.current[key] = pressed;
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -161,6 +193,7 @@ const App: React.FC = () => {
     let animationFrame = 0;
     const keys = new Set<string>();
     const level = buildLevel(variant);
+    const physics = buildPhysics(variant);
     const { platforms, coins, enemies, worldWidth, winX, playerStartX, playerStartY } = level;
 
     const player = {
@@ -317,27 +350,27 @@ const App: React.FC = () => {
 
     const step = (): void => {
       if (!ended) {
-        const left = keys.has('arrowleft') || keys.has('q') || keys.has('a');
-        const right = keys.has('arrowright') || keys.has('d');
-        const jump = keys.has(' ') || keys.has('arrowup') || keys.has('w') || keys.has('z');
+        const left = keys.has('arrowleft') || keys.has('q') || keys.has('a') || touchInputRef.current.left;
+        const right = keys.has('arrowright') || keys.has('d') || touchInputRef.current.right;
+        const jump = keys.has(' ') || keys.has('arrowup') || keys.has('w') || keys.has('z') || touchInputRef.current.jump;
 
         if (left && !right) {
-          player.vx = -MOVE_SPEED;
+          player.vx = -physics.moveSpeed;
           player.facing = -1;
         } else if (right && !left) {
-          player.vx = MOVE_SPEED;
+          player.vx = physics.moveSpeed;
           player.facing = 1;
         } else {
-          player.vx *= 0.78;
+          player.vx *= physics.drag;
           if (Math.abs(player.vx) < 0.1) player.vx = 0;
         }
 
         if (jump && player.onGround) {
-          player.vy = JUMP_SPEED;
+          player.vy = physics.jumpSpeed;
           player.onGround = false;
         }
 
-        player.vy += GRAVITY;
+        player.vy += physics.gravity;
         if (player.vy > 20) player.vy = 20;
 
         player.x += player.vx;
@@ -389,7 +422,7 @@ const App: React.FC = () => {
           const fallingOnEnemy = player.vy > 0 && playerBottom - enemyTop < 18;
           if (fallingOnEnemy) {
             enemy.alive = false;
-            player.vy = -9;
+            player.vy = physics.stompBounce;
             points += 120;
             setScore(points);
           } else {
@@ -402,7 +435,7 @@ const App: React.FC = () => {
           const hit = intersects(player, { x: coin.x - coin.r, y: coin.y - coin.r, w: coin.r * 2, h: coin.r * 2 });
           if (hit) {
             coin.collected = true;
-            points += 25;
+            points += physics.coinValue;
             setScore(points);
           }
         }
@@ -437,6 +470,7 @@ const App: React.FC = () => {
   }, [sessionId, variant]);
 
   const restart = (): void => {
+    touchInputRef.current = { left: false, right: false, jump: false };
     setScore(0);
     setLives(MAX_LIVES);
     setGameOver(false);
@@ -446,12 +480,23 @@ const App: React.FC = () => {
 
   const changeVariant = (next: Variant): void => {
     if (next === variant) return;
+    touchInputRef.current = { left: false, right: false, jump: false };
     setVariant(next);
     setScore(0);
     setLives(MAX_LIVES);
     setGameOver(false);
     setWon(false);
     setSessionId(value => value + 1);
+  };
+
+  const onControlDown = (key: 'left' | 'right' | 'jump') => (event: React.PointerEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+    setTouchInput(key, true);
+  };
+
+  const onControlUp = (key: 'left' | 'right' | 'jump') => (event: React.PointerEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+    setTouchInput(key, false);
   };
 
   const basePath = window.location.pathname.includes('/puka-pixel-adventure/') ? '/puka-pixel-adventure' : '';
@@ -498,12 +543,50 @@ const App: React.FC = () => {
           </button>
         </div>
 
+        <div style={{ marginBottom: 10, color: '#c5e6ff', fontSize: 13 }}>
+          {variant === 'SuperMarioBros-v0'
+            ? 'v0: sauts plus verticaux et inertia plus lourde, style classique.'
+            : 'v2: deplacements plus rapides et sauts plus flottants, style plus aerien.'}
+        </div>
+
         <canvas
           ref={canvasRef}
           width={WIDTH}
           height={HEIGHT}
-          style={{ width: '100%', maxWidth: WIDTH, height: 'auto', border: '3px solid #13314f', borderRadius: 8, background: '#8ed2ff', imageRendering: 'pixelated' }}
+          style={{ width: '100%', maxWidth: WIDTH, height: 'auto', border: '3px solid #13314f', borderRadius: 8, background: '#8ed2ff', imageRendering: 'pixelated', touchAction: 'none' }}
         />
+
+        <div style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button
+              onPointerDown={onControlDown('left')}
+              onPointerUp={onControlUp('left')}
+              onPointerCancel={onControlUp('left')}
+              onPointerLeave={onControlUp('left')}
+              style={{ border: '2px solid #d9f2ff', background: '#184f84', color: '#fff', borderRadius: 10, padding: '10px 16px', fontWeight: 700, minWidth: 60, touchAction: 'none' }}
+            >
+              ←
+            </button>
+            <button
+              onPointerDown={onControlDown('right')}
+              onPointerUp={onControlUp('right')}
+              onPointerCancel={onControlUp('right')}
+              onPointerLeave={onControlUp('right')}
+              style={{ border: '2px solid #d9f2ff', background: '#184f84', color: '#fff', borderRadius: 10, padding: '10px 16px', fontWeight: 700, minWidth: 60, touchAction: 'none' }}
+            >
+              →
+            </button>
+          </div>
+          <button
+            onPointerDown={onControlDown('jump')}
+            onPointerUp={onControlUp('jump')}
+            onPointerCancel={onControlUp('jump')}
+            onPointerLeave={onControlUp('jump')}
+            style={{ border: '2px solid #d9f2ff', background: '#1a6ad6', color: '#fff', borderRadius: 10, padding: '10px 20px', fontWeight: 700, minWidth: 88, touchAction: 'none' }}
+          >
+            SAUT
+          </button>
+        </div>
 
         <footer style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <span>{statusText}</span>

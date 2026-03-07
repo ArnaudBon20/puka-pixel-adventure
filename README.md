@@ -40,9 +40,13 @@ Modifications principales dans ce fork :
 - Genre : platformer 2D side-scroller (inspire de Mario)
 - But : aller jusqu'au drapeau, collecter des pieces et eviter les ennemis
 - Variantes jouables : `SuperMarioBros-v0` et `SuperMarioBros2-v0` (avec lapin bleu)
+- Difference des variantes :
+  - `SuperMarioBros-v0` : physique plus lourde, sauts plus verticaux (feeling classique)
+  - `SuperMarioBros2-v0` : deplacement plus rapide, sauts plus flottants (feeling aerien)
 - Controles :
   - `Fleches` / `Q,D` : deplacement
   - `Espace` / `Z` / `W` : saut
+  - iPhone / tactile : boutons `←`, `→` et `SAUT` a l'ecran
 
 ## Lancer en local
 
