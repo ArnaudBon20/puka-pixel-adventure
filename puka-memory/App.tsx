@@ -20,8 +20,8 @@ const FACES: Face[] = [
   { id: 'bebe-puka', label: 'Bebe Puka', symbol: '🍼🐰' },
   { id: 'maman-puka', label: 'Maman Puka', symbol: '👩🐰' },
   { id: 'petit-garcon-blond', label: 'Petit garcon blond', symbol: '👱‍♂️' },
-  { id: 'maman-brune', label: 'Maman brune', symbol: '🤎👩' },
-  { id: 'papa-brun', label: 'Papa brun', symbol: '🤎👨' },
+  { id: 'maman-brune', label: 'Maman brune', symbol: '👩🏽' },
+  { id: 'papa-brun', label: 'Papa brun', symbol: '👨🏽' },
   { id: 'petit-ours', label: 'Petit ours', symbol: '🧸' },
   { id: 'lapin-brun', label: 'Lapin brun', symbol: '🤎🐇' },
   { id: 'drapeau-turc', label: 'Drapeau turc', symbol: '🇹🇷' },
@@ -157,10 +157,39 @@ const App: React.FC = () => {
                 {showFace ? (
                   <div style={{ display: 'grid', gap: 8, placeItems: 'center' }}>
                     <span style={{ fontSize: 30, lineHeight: 1 }}>{card.symbol}</span>
-                    <span style={{ fontSize: 8 }}>{card.label}</span>
                   </div>
                 ) : (
-                  <span style={{ fontSize: 12, color: '#A5D6A7' }}>PUKA</span>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 8,
+                      border: '2px solid #0D47A1',
+                      background:
+                        'linear-gradient(135deg, #1E88E5 0%, #1976D2 45%, #1565C0 100%)',
+                      display: 'grid',
+                      alignContent: 'center',
+                      gap: 2,
+                      overflow: 'hidden',
+                      transform: 'rotate(-8deg)'
+                    }}
+                  >
+                    {Array.from({ length: 8 }).map((_, row) => (
+                      <div
+                        key={`pattern-${card.uid}-${row}`}
+                        style={{
+                          fontSize: 7,
+                          letterSpacing: 1,
+                          color: '#BBDEFB',
+                          opacity: 0.9,
+                          whiteSpace: 'nowrap',
+                          transform: `translateX(${row % 2 === 0 ? '-6px' : '2px'})`
+                        }}
+                      >
+                        PUKA PUKA PUKA PUKA
+                      </div>
+                    ))}
+                  </div>
                 )}
               </button>
             );
