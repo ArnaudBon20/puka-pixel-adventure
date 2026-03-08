@@ -49,13 +49,22 @@ jobs:
         working-directory: super-bunny-bros
         run: npm run build -- --base=/puka-pixel-adventure/super-bunny-bros/
 
+      - name: Install Puka Memory dependencies
+        working-directory: puka-memory
+        run: npm install --no-audit --no-fund
+
+      - name: Build Puka Memory
+        working-directory: puka-memory
+        run: npm run build -- --base=/puka-pixel-adventure/puka-memory/
+
       - name: Assemble Pages artifact
         run: |
           rm -rf public-site
-          mkdir -p public-site/puka-garden-mystery public-site/super-bunny-bros
+          mkdir -p public-site/puka-garden-mystery public-site/super-bunny-bros public-site/puka-memory
           cp -R dist/* public-site/
           cp -R garden-mystery/dist/* public-site/puka-garden-mystery/
           cp -R super-bunny-bros/dist/* public-site/super-bunny-bros/
+          cp -R puka-memory/dist/* public-site/puka-memory/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

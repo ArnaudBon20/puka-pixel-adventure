@@ -17,6 +17,7 @@ Modifications principales dans ce fork :
 
 - GitHub Pages : [arnaudbon20.github.io/puka-pixel-adventure](https://arnaudbon20.github.io/puka-pixel-adventure/)
 - Super Blue Bunny Bros : [arnaudbon20.github.io/puka-pixel-adventure/super-bunny-bros/](https://arnaudbon20.github.io/puka-pixel-adventure/super-bunny-bros/)
+- Puka Memory : [arnaudbon20.github.io/puka-pixel-adventure/puka-memory/](https://arnaudbon20.github.io/puka-pixel-adventure/puka-memory/)
 
 ## Jeux inclus
 
@@ -39,14 +40,16 @@ Modifications principales dans ce fork :
 ### 3. Super Blue Bunny Bros (`super-bunny-bros/`)
 - Genre : platformer 2D side-scroller (inspire de Mario)
 - But : aller jusqu'au drapeau, collecter des pieces et eviter les ennemis
-- Variantes jouables : `SuperMarioBros-v0` et `SuperMarioBros2-v0` (avec lapin bleu)
-- Difference des variantes :
-  - `SuperMarioBros-v0` : physique plus lourde, sauts plus verticaux (feeling classique)
-  - `SuperMarioBros2-v0` : deplacement plus rapide, sauts plus flottants (feeling aerien)
+- Mode : une seule version avec campagne a plusieurs niveaux successifs
 - Controles :
   - `Fleches` / `Q,D` : deplacement
   - `Espace` / `Z` / `W` : saut
   - iPhone / tactile : boutons `←`, `→` et `SAUT` a l'ecran
+
+### 4. Puka Memory (`puka-memory/`)
+- Genre : memory / jeu de paires
+- But : retrouver les 10 paires d'images
+- Cartes : Puka, Bebe Puka, Maman Puka, petit garcon blond, maman brune, papa brun, petit ours, lapin brun, drapeau turc, drapeau suisse
 
 ## Lancer en local
 
@@ -68,6 +71,13 @@ npm run dev
 ```bash
 # Jeu super-bunny-bros
 cd super-bunny-bros
+npm install
+npm run dev
+```
+
+```bash
+# Jeu puka-memory
+cd puka-memory
 npm install
 npm run dev
 ```

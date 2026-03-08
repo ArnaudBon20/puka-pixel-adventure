@@ -88,7 +88,7 @@ const App: React.FC = () => {
 
         {/* --- HOME --- */}
         {isHome && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
               <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Puka&apos;s Party</h2>
               <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
@@ -123,6 +123,19 @@ const App: React.FC = () => {
               <a
                 href={`${basePath}/super-bunny-bros/`}
                 className="mt-auto inline-flex justify-center bg-[#42A5F5] hover:bg-[#1E88E5] text-white text-sm py-3 px-4 rounded border-b-4 border-[#0D47A1] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
+              >
+                JOUER
+              </a>
+            </div>
+
+            <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
+              <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Puka Memory</h2>
+              <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
+                Memory familial avec Puka, la famille, animaux et drapeaux.
+              </p>
+              <a
+                href={`${basePath}/puka-memory/`}
+                className="mt-auto inline-flex justify-center bg-[#FFCA28] hover:bg-[#FFB300] text-[#1B5E20] text-sm py-3 px-4 rounded border-b-4 border-[#F57F17] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
               >
                 JOUER
               </a>
