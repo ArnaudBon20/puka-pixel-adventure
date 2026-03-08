@@ -17,15 +17,15 @@ type MemoryCard = {
 
 const FACES: Face[] = [
   { id: 'puka', label: 'Puka', symbol: '🐰' },
-  { id: 'bebe-puka', label: 'Bebe Puka', symbol: '🍼🐰' },
-  { id: 'maman-puka', label: 'Maman Puka', symbol: '👩🐰' },
-  { id: 'petit-garcon-blond', label: 'Petit garcon blond', symbol: '👱‍♂️' },
-  { id: 'maman-brune', label: 'Maman brune', symbol: '👩🏽' },
-  { id: 'papa-brun', label: 'Papa brun', symbol: '👨🏽' },
-  { id: 'petit-ours', label: 'Petit ours', symbol: '🧸' },
-  { id: 'lapin-brun', label: 'Lapin brun', symbol: '🤎🐇' },
-  { id: 'drapeau-turc', label: 'Drapeau turc', symbol: '🇹🇷' },
-  { id: 'drapeau-suisse', label: 'Drapeau suisse', symbol: '🇨🇭' }
+  { id: 'bebe-puka', label: 'Baby Puka', symbol: '🍼🐰' },
+  { id: 'maman-puka', label: 'Mama Puka', symbol: '👩🐰' },
+  { id: 'petit-garcon-blond', label: 'Kleiner blonder Junge', symbol: '👱‍♂️' },
+  { id: 'maman-brune', label: 'Brünette Mama', symbol: '👩🏽' },
+  { id: 'papa-brun', label: 'Brünetter Papa', symbol: '👨🏽' },
+  { id: 'petit-ours', label: 'Kleiner Bär', symbol: '🧸' },
+  { id: 'lapin-brun', label: 'Brauner Hase', symbol: '🤎🐇' },
+  { id: 'drapeau-turc', label: 'Türkische Flagge', symbol: '🇹🇷' },
+  { id: 'drapeau-suisse', label: 'Schweizer Flagge', symbol: '🇨🇭' }
 ];
 
 const shuffle = <T,>(arr: T[]): T[] => {
@@ -118,11 +118,11 @@ const App: React.FC = () => {
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
           <div>
             <strong style={{ fontSize: 20, color: '#FFEB3B', textShadow: '2px 2px 0 #000' }}>Puka&apos;s Party Memory</strong>
-            <div style={{ marginTop: 8, fontSize: 11 }}>Trouve les 10 paires: famille, animaux et drapeaux.</div>
+            <div style={{ marginTop: 8, fontSize: 11 }}>Finde 10 Paare: Familie, Tiere und Flaggen.</div>
           </div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: 11 }}>Coups: {moves}</span>
-            <span style={{ fontSize: 11 }}>Paires: {matchedCount / 2}/10</span>
+            <span style={{ fontSize: 11 }}>Züge: {moves}</span>
+            <span style={{ fontSize: 11 }}>Paare: {matchedCount / 2}/10</span>
           </div>
         </header>
 
@@ -198,20 +198,20 @@ const App: React.FC = () => {
 
         <footer style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
           <span style={{ fontSize: 11 }}>
-            {gameWon ? 'Bravo! Tu as trouve toutes les paires.' : 'Retourne 2 cartes identiques pour faire une paire.'}
+            {gameWon ? 'Super! Du hast alle Paare gefunden.' : 'Drehe zwei gleiche Karten um, um ein Paar zu bilden.'}
           </span>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <button
               onClick={resetGame}
               style={{ border: '2px solid #880E4F', background: '#F06292', color: '#fff', borderRadius: 6, padding: '6px 12px', cursor: 'pointer' }}
             >
-              Rejouer
+              Nochmal spielen
             </button>
             <a
               href={`${basePath}/`}
               style={{ border: '2px solid #263238', background: '#546E7A', color: '#fff', borderRadius: 6, padding: '6px 12px', textDecoration: 'none' }}
             >
-              Tous les jeux
+              Alle Spiele
             </a>
           </div>
         </footer>

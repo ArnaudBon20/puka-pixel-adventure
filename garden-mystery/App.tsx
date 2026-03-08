@@ -373,13 +373,13 @@ const App: React.FC = () => {
             <h1 className="text-3xl md:text-5xl text-[#FFEB3B] pixel-text mb-6 flex flex-col items-center gap-4">
                 <Crown size={40} className="text-[#F06292]" />
                 <span>Puka&apos;s Party</span>
-                <span className="text-base md:text-xl text-[#E8F5E9]">Garden Mystery</span>
+                <span className="text-base md:text-xl text-[#E8F5E9]">Gartengeheimnis</span>
             </h1>
             <div className="mb-6 text-left space-y-3 bg-[#1B5E20] p-4 rounded border-2 border-[#558B2F] text-[#E8F5E9] text-xs leading-6">
                 <p><strong>Ziel:</strong> Sammle alle Karotten, ohne vom blonden Jungen erwischt zu werden.</p>
-                <p><strong>Steuerung:</strong> D-Pad tactile ou fleches clavier.</p>
+                <p><strong>Steuerung:</strong> D-Pad oder Pfeiltasten.</p>
                 <p><strong>Schonzeit:</strong> Der Junge wartet 5 Zuege.</p>
-                <p><strong>Schnueffeln:</strong> Maintenir le bouton ou LEERTASTE.</p>
+                <p><strong>Schnueffeln:</strong> Taste halten oder LEERTASTE.</p>
                 <p><strong>Objekte:</strong> Garn zur Ablenkung, Quietschspielzeug zum Betaeuben.</p>
             </div>
             <div className="space-y-4">
@@ -396,7 +396,7 @@ const App: React.FC = () => {
                     onClick={goToMainMenu}
                     className="w-full py-3 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px] shadow transition-all"
                 >
-                    Retour menu des jeux
+                    Zur Spiele-Uebersicht
                 </button>
             </div>
         </div>
@@ -446,7 +446,7 @@ const App: React.FC = () => {
                                                 onClick={goToMainMenu}
                                                 className="px-6 py-2 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px]"
                                             >
-                                                Tous les jeux
+                                                Alle Spiele
                                             </button>
                                         </div>
                                     ) : (
@@ -456,7 +456,7 @@ const App: React.FC = () => {
                                                 onClick={goToMainMenu}
                                                 className="px-6 py-2 bg-[#546E7A] hover:bg-[#455A64] text-white rounded border-b-4 border-[#263238] active:border-b-0 active:mt-[2px]"
                                             >
-                                                Tous les jeux
+                                                Alle Spiele
                                             </button>
                                         </div>
                                     )}
@@ -480,7 +480,7 @@ const App: React.FC = () => {
                                             onClick={goToMainMenu}
                                             className="px-6 py-2 bg-[#1B5E20] hover:bg-[#2E7D32] text-white rounded border-b-4 border-[#0D3B10] active:border-b-0 active:mt-[2px]"
                                         >
-                                            Tous les jeux
+                                            Alle Spiele
                                         </button>
                                     </div>
                                 </>

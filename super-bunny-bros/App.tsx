@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-type Variant = 'SuperMarioBros-v0' | 'SuperMarioBros2-v0';
 type Platform = { x: number; y: number; w: number; h: number; style?: 'ground' | 'brick' | 'pipe' };
 type Coin = { x: number; y: number; r: number; collected: boolean };
 type Enemy = { x: number; y: number; w: number; h: number; vx: number; minX: number; maxX: number; alive: boolean };
@@ -12,11 +11,15 @@ type Physics = {
   stompBounce: number;
   coinValue: number;
 };
-type Level = {
+type LevelDefinition = {
+  id: string;
+  name: string;
+  description: string;
   worldWidth: number;
   winX: number;
   playerStartX: number;
   playerStartY: number;
+  physics: Physics;
   platforms: Platform[];
   coins: Coin[];
   enemies: Enemy[];
@@ -33,156 +36,214 @@ const intersects = (
   b: { x: number; y: number; w: number; h: number }
 ): boolean => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 
-const buildPhysics = (variant: Variant): Physics => {
-  if (variant === 'SuperMarioBros2-v0') {
-    return {
-      gravity: 0.58,
-      moveSpeed: 5.2,
-      jumpSpeed: -13.4,
-      drag: 0.86,
-      stompBounce: -11,
-      coinValue: 40
-    };
-  }
-
-  return {
-    gravity: 0.82,
-    moveSpeed: 4.2,
-    jumpSpeed: -15.2,
-    drag: 0.76,
-    stompBounce: -9,
-    coinValue: 25
-  };
-};
-
-const buildLevel = (variant: Variant): Level => {
-  if (variant === 'SuperMarioBros2-v0') {
-    const worldWidth = 4700;
-    return {
-      worldWidth,
-      winX: worldWidth - 160,
-      playerStartX: 80,
-      playerStartY: 420,
-      platforms: [
-        { x: 0, y: 470, w: worldWidth, h: 70, style: 'ground' },
-        { x: 220, y: 400, w: 150, h: 24, style: 'brick' },
-        { x: 420, y: 340, w: 160, h: 24, style: 'brick' },
-        { x: 660, y: 280, w: 170, h: 24, style: 'brick' },
-        { x: 940, y: 340, w: 110, h: 130, style: 'pipe' },
-        { x: 1140, y: 250, w: 160, h: 24, style: 'brick' },
-        { x: 1360, y: 320, w: 130, h: 24, style: 'brick' },
-        { x: 1580, y: 380, w: 120, h: 24, style: 'brick' },
-        { x: 1760, y: 300, w: 180, h: 24, style: 'brick' },
-        { x: 2040, y: 250, w: 180, h: 24, style: 'brick' },
-        { x: 2320, y: 310, w: 200, h: 24, style: 'brick' },
-        { x: 2620, y: 240, w: 180, h: 24, style: 'brick' },
-        { x: 2930, y: 360, w: 120, h: 24, style: 'brick' },
-        { x: 3160, y: 300, w: 130, h: 24, style: 'brick' },
-        { x: 3360, y: 240, w: 180, h: 24, style: 'brick' },
-        { x: 3650, y: 190, w: 150, h: 24, style: 'brick' },
-        { x: 3910, y: 280, w: 180, h: 24, style: 'brick' },
-        { x: 4200, y: 220, w: 180, h: 24, style: 'brick' }
-      ],
-      coins: [
-        { x: 270, y: 360, r: 10, collected: false },
-        { x: 470, y: 300, r: 10, collected: false },
-        { x: 520, y: 300, r: 10, collected: false },
-        { x: 720, y: 240, r: 10, collected: false },
-        { x: 770, y: 240, r: 10, collected: false },
-        { x: 1190, y: 210, r: 10, collected: false },
-        { x: 1240, y: 210, r: 10, collected: false },
-        { x: 1820, y: 260, r: 10, collected: false },
-        { x: 1880, y: 260, r: 10, collected: false },
-        { x: 2100, y: 210, r: 10, collected: false },
-        { x: 2420, y: 270, r: 10, collected: false },
-        { x: 2690, y: 200, r: 10, collected: false },
-        { x: 3430, y: 200, r: 10, collected: false },
-        { x: 3720, y: 150, r: 10, collected: false },
-        { x: 4280, y: 180, r: 10, collected: false },
-        { x: 4340, y: 180, r: 10, collected: false }
-      ],
-      enemies: [
-        { x: 860, y: 434, w: 30, h: 36, vx: 1.4, minX: 740, maxX: 930, alive: true },
-        { x: 1500, y: 434, w: 30, h: 36, vx: 1.7, minX: 1400, maxX: 1670, alive: true },
-        { x: 2280, y: 274, w: 30, h: 36, vx: 1.6, minX: 2320, maxX: 2510, alive: true },
-        { x: 3040, y: 434, w: 30, h: 36, vx: 1.8, minX: 2930, maxX: 3120, alive: true },
-        { x: 4030, y: 244, w: 30, h: 36, vx: 1.7, minX: 3910, maxX: 4080, alive: true }
-      ]
-    };
-  }
-
-  const worldWidth = 4200;
-  return {
-    worldWidth,
-    winX: worldWidth - 140,
+const LEVELS: LevelDefinition[] = [
+  {
+    id: 'level-1',
+    name: 'Level 1 - Ruhiger Garten',
+    description: 'Einstieg mit einfachen Spruengen und langsamen Gegnern.',
+    worldWidth: 3200,
+    winX: 3050,
     playerStartX: 80,
     playerStartY: 420,
+    physics: {
+      gravity: 0.8,
+      moveSpeed: 4.2,
+      jumpSpeed: -15,
+      drag: 0.76,
+      stompBounce: -9,
+      coinValue: 25
+    },
     platforms: [
-      { x: 0, y: 470, w: worldWidth, h: 70, style: 'ground' },
-      { x: 240, y: 390, w: 170, h: 24, style: 'brick' },
-      { x: 520, y: 340, w: 170, h: 24, style: 'brick' },
-      { x: 760, y: 290, w: 140, h: 24, style: 'brick' },
-      { x: 980, y: 250, w: 170, h: 24, style: 'brick' },
-      { x: 1230, y: 330, w: 120, h: 140, style: 'pipe' },
-      { x: 1450, y: 380, w: 160, h: 24, style: 'brick' },
-      { x: 1710, y: 310, w: 190, h: 24, style: 'brick' },
-      { x: 1980, y: 250, w: 150, h: 24, style: 'brick' },
-      { x: 2230, y: 350, w: 170, h: 24, style: 'brick' },
-      { x: 2480, y: 300, w: 210, h: 24, style: 'brick' },
-      { x: 2830, y: 380, w: 130, h: 24, style: 'brick' },
-      { x: 3070, y: 330, w: 160, h: 24, style: 'brick' },
-      { x: 3370, y: 280, w: 240, h: 24, style: 'brick' },
-      { x: 3700, y: 220, w: 170, h: 24, style: 'brick' }
+      { x: 0, y: 470, w: 3200, h: 70, style: 'ground' },
+      { x: 230, y: 390, w: 170, h: 24, style: 'brick' },
+      { x: 500, y: 340, w: 160, h: 24, style: 'brick' },
+      { x: 730, y: 290, w: 140, h: 24, style: 'brick' },
+      { x: 960, y: 250, w: 170, h: 24, style: 'brick' },
+      { x: 1210, y: 330, w: 120, h: 140, style: 'pipe' },
+      { x: 1440, y: 380, w: 160, h: 24, style: 'brick' },
+      { x: 1700, y: 310, w: 190, h: 24, style: 'brick' },
+      { x: 1980, y: 250, w: 170, h: 24, style: 'brick' },
+      { x: 2250, y: 350, w: 180, h: 24, style: 'brick' },
+      { x: 2520, y: 290, w: 220, h: 24, style: 'brick' },
+      { x: 2820, y: 230, w: 170, h: 24, style: 'brick' }
     ],
     coins: [
-      { x: 300, y: 350, r: 10, collected: false },
-      { x: 360, y: 350, r: 10, collected: false },
-      { x: 580, y: 300, r: 10, collected: false },
-      { x: 640, y: 300, r: 10, collected: false },
-      { x: 820, y: 250, r: 10, collected: false },
-      { x: 1030, y: 210, r: 10, collected: false },
-      { x: 1110, y: 210, r: 10, collected: false },
-      { x: 1520, y: 340, r: 10, collected: false },
-      { x: 1770, y: 270, r: 10, collected: false },
+      { x: 290, y: 350, r: 10, collected: false },
+      { x: 350, y: 350, r: 10, collected: false },
+      { x: 560, y: 300, r: 10, collected: false },
+      { x: 620, y: 300, r: 10, collected: false },
+      { x: 790, y: 250, r: 10, collected: false },
+      { x: 1010, y: 210, r: 10, collected: false },
+      { x: 1090, y: 210, r: 10, collected: false },
+      { x: 1760, y: 270, r: 10, collected: false },
       { x: 1850, y: 270, r: 10, collected: false },
-      { x: 2030, y: 210, r: 10, collected: false },
-      { x: 2560, y: 260, r: 10, collected: false },
-      { x: 2640, y: 260, r: 10, collected: false },
-      { x: 3160, y: 290, r: 10, collected: false },
-      { x: 3470, y: 240, r: 10, collected: false },
-      { x: 3570, y: 240, r: 10, collected: false },
-      { x: 3770, y: 180, r: 10, collected: false },
-      { x: 3830, y: 180, r: 10, collected: false }
+      { x: 2040, y: 210, r: 10, collected: false },
+      { x: 2580, y: 250, r: 10, collected: false },
+      { x: 2670, y: 250, r: 10, collected: false },
+      { x: 2870, y: 190, r: 10, collected: false }
     ],
     enemies: [
-      { x: 700, y: 434, w: 30, h: 36, vx: 1.3, minX: 620, maxX: 860, alive: true },
-      { x: 1360, y: 434, w: 30, h: 36, vx: 1.5, minX: 1260, maxX: 1440, alive: true },
-      { x: 2110, y: 214, w: 30, h: 36, vx: 1.6, minX: 1990, maxX: 2250, alive: true },
-      { x: 2900, y: 344, w: 30, h: 36, vx: 1.8, minX: 2830, maxX: 2960, alive: true },
-      { x: 3500, y: 244, w: 30, h: 36, vx: 1.6, minX: 3380, maxX: 3600, alive: true }
+      { x: 680, y: 434, w: 30, h: 36, vx: 1.2, minX: 610, maxX: 840, alive: true },
+      { x: 1350, y: 434, w: 30, h: 36, vx: 1.4, minX: 1230, maxX: 1420, alive: true },
+      { x: 2080, y: 214, w: 30, h: 36, vx: 1.5, minX: 1980, maxX: 2160, alive: true },
+      { x: 2600, y: 254, w: 30, h: 36, vx: 1.5, minX: 2520, maxX: 2740, alive: true }
     ]
-  };
-};
+  },
+  {
+    id: 'level-2',
+    name: 'Level 2 - Lebendiger Wald',
+    description: 'Schneller, schwebendere Spruenge und laengere Abschnitte.',
+    worldWidth: 4300,
+    winX: 4130,
+    playerStartX: 80,
+    playerStartY: 420,
+    physics: {
+      gravity: 0.62,
+      moveSpeed: 5.1,
+      jumpSpeed: -13.5,
+      drag: 0.86,
+      stompBounce: -11,
+      coinValue: 35
+    },
+    platforms: [
+      { x: 0, y: 470, w: 4300, h: 70, style: 'ground' },
+      { x: 220, y: 400, w: 150, h: 24, style: 'brick' },
+      { x: 430, y: 340, w: 160, h: 24, style: 'brick' },
+      { x: 680, y: 280, w: 180, h: 24, style: 'brick' },
+      { x: 980, y: 340, w: 110, h: 130, style: 'pipe' },
+      { x: 1180, y: 250, w: 170, h: 24, style: 'brick' },
+      { x: 1430, y: 320, w: 130, h: 24, style: 'brick' },
+      { x: 1660, y: 380, w: 120, h: 24, style: 'brick' },
+      { x: 1880, y: 300, w: 190, h: 24, style: 'brick' },
+      { x: 2170, y: 240, w: 180, h: 24, style: 'brick' },
+      { x: 2450, y: 310, w: 210, h: 24, style: 'brick' },
+      { x: 2780, y: 240, w: 180, h: 24, style: 'brick' },
+      { x: 3090, y: 360, w: 130, h: 24, style: 'brick' },
+      { x: 3340, y: 300, w: 140, h: 24, style: 'brick' },
+      { x: 3550, y: 240, w: 190, h: 24, style: 'brick' },
+      { x: 3840, y: 190, w: 160, h: 24, style: 'brick' }
+    ],
+    coins: [
+      { x: 270, y: 360, r: 10, collected: false },
+      { x: 490, y: 300, r: 10, collected: false },
+      { x: 540, y: 300, r: 10, collected: false },
+      { x: 740, y: 240, r: 10, collected: false },
+      { x: 800, y: 240, r: 10, collected: false },
+      { x: 1230, y: 210, r: 10, collected: false },
+      { x: 1290, y: 210, r: 10, collected: false },
+      { x: 1940, y: 260, r: 10, collected: false },
+      { x: 2020, y: 260, r: 10, collected: false },
+      { x: 2230, y: 200, r: 10, collected: false },
+      { x: 2550, y: 270, r: 10, collected: false },
+      { x: 2860, y: 200, r: 10, collected: false },
+      { x: 3400, y: 260, r: 10, collected: false },
+      { x: 3620, y: 200, r: 10, collected: false },
+      { x: 3890, y: 150, r: 10, collected: false }
+    ],
+    enemies: [
+      { x: 860, y: 434, w: 30, h: 36, vx: 1.5, minX: 730, maxX: 930, alive: true },
+      { x: 1520, y: 434, w: 30, h: 36, vx: 1.8, minX: 1440, maxX: 1710, alive: true },
+      { x: 2340, y: 204, w: 30, h: 36, vx: 1.8, minX: 2170, maxX: 2350, alive: true },
+      { x: 3130, y: 324, w: 30, h: 36, vx: 1.9, minX: 3090, maxX: 3230, alive: true },
+      { x: 3890, y: 154, w: 30, h: 36, vx: 1.9, minX: 3840, maxX: 4000, alive: true }
+    ]
+  },
+  {
+    id: 'level-3',
+    name: 'Level 3 - Puka Finale',
+    description: 'Finales Level: hohes Tempo und praezises Timing.',
+    worldWidth: 5000,
+    winX: 4820,
+    playerStartX: 80,
+    playerStartY: 420,
+    physics: {
+      gravity: 0.74,
+      moveSpeed: 5.0,
+      jumpSpeed: -14,
+      drag: 0.8,
+      stompBounce: -10.5,
+      coinValue: 50
+    },
+    platforms: [
+      { x: 0, y: 470, w: 5000, h: 70, style: 'ground' },
+      { x: 230, y: 370, w: 170, h: 24, style: 'brick' },
+      { x: 470, y: 300, w: 160, h: 24, style: 'brick' },
+      { x: 700, y: 240, w: 140, h: 24, style: 'brick' },
+      { x: 920, y: 320, w: 120, h: 150, style: 'pipe' },
+      { x: 1140, y: 240, w: 170, h: 24, style: 'brick' },
+      { x: 1400, y: 320, w: 170, h: 24, style: 'brick' },
+      { x: 1660, y: 260, w: 190, h: 24, style: 'brick' },
+      { x: 1940, y: 330, w: 140, h: 24, style: 'brick' },
+      { x: 2200, y: 250, w: 170, h: 24, style: 'brick' },
+      { x: 2460, y: 330, w: 180, h: 24, style: 'brick' },
+      { x: 2740, y: 250, w: 200, h: 24, style: 'brick' },
+      { x: 3060, y: 190, w: 170, h: 24, style: 'brick' },
+      { x: 3340, y: 280, w: 220, h: 24, style: 'brick' },
+      { x: 3650, y: 210, w: 180, h: 24, style: 'brick' },
+      { x: 3920, y: 310, w: 150, h: 24, style: 'brick' },
+      { x: 4180, y: 230, w: 180, h: 24, style: 'brick' },
+      { x: 4460, y: 170, w: 190, h: 24, style: 'brick' }
+    ],
+    coins: [
+      { x: 280, y: 330, r: 10, collected: false },
+      { x: 520, y: 260, r: 10, collected: false },
+      { x: 560, y: 260, r: 10, collected: false },
+      { x: 760, y: 200, r: 10, collected: false },
+      { x: 1200, y: 200, r: 10, collected: false },
+      { x: 1450, y: 280, r: 10, collected: false },
+      { x: 1750, y: 220, r: 10, collected: false },
+      { x: 2280, y: 210, r: 10, collected: false },
+      { x: 2550, y: 290, r: 10, collected: false },
+      { x: 2860, y: 210, r: 10, collected: false },
+      { x: 3140, y: 150, r: 10, collected: false },
+      { x: 3430, y: 240, r: 10, collected: false },
+      { x: 3730, y: 170, r: 10, collected: false },
+      { x: 4250, y: 190, r: 10, collected: false },
+      { x: 4520, y: 130, r: 10, collected: false },
+      { x: 4580, y: 130, r: 10, collected: false }
+    ],
+    enemies: [
+      { x: 860, y: 434, w: 30, h: 36, vx: 1.7, minX: 740, maxX: 930, alive: true },
+      { x: 1580, y: 434, w: 30, h: 36, vx: 2.0, minX: 1410, maxX: 1700, alive: true },
+      { x: 2360, y: 214, w: 30, h: 36, vx: 2.0, minX: 2200, maxX: 2370, alive: true },
+      { x: 2960, y: 214, w: 30, h: 36, vx: 2.1, minX: 2740, maxX: 2940, alive: true },
+      { x: 4040, y: 274, w: 30, h: 36, vx: 2.0, minX: 3920, maxX: 4080, alive: true },
+      { x: 4520, y: 134, w: 30, h: 36, vx: 2.1, minX: 4460, maxX: 4650, alive: true }
+    ]
+  }
+];
+
+const cloneLevelData = (level: LevelDefinition): LevelDefinition => ({
+  ...level,
+  platforms: level.platforms.map(platform => ({ ...platform })),
+  coins: level.coins.map(coin => ({ ...coin, collected: false })),
+  enemies: level.enemies.map(enemy => ({ ...enemy, alive: true }))
+});
 
 const App: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const touchInputRef = useRef({ left: false, right: false, jump: false });
-  const [variant, setVariant] = useState<Variant>('SuperMarioBros-v0');
+
+  const [levelIndex, setLevelIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(MAX_LIVES);
   const [gameOver, setGameOver] = useState(false);
-  const [won, setWon] = useState(false);
-  const [sessionId, setSessionId] = useState(0);
+  const [levelWon, setLevelWon] = useState(false);
+  const [campaignWon, setCampaignWon] = useState(false);
+  const [runId, setRunId] = useState(0);
 
-  const statusText = useMemo(() => {
-    if (won) return `${variant}: niveau termine, lapin bleu victorieux.`;
-    if (gameOver) return `${variant}: perdu, relance la partie.`;
-    return `${variant} | Clavier: fleches + espace | iPhone: boutons tactiles`;
-  }, [gameOver, won, variant]);
+  const level = LEVELS[levelIndex];
 
   const setTouchInput = (key: 'left' | 'right' | 'jump', pressed: boolean): void => {
     touchInputRef.current[key] = pressed;
   };
+
+  const statusText = useMemo(() => {
+    if (campaignWon) return 'Kampagne beendet: Alle Level geschafft.';
+    if (levelWon) return `${level.name} beendet. Weiter zum naechsten Level.`;
+    if (gameOver) return 'Verloren. Starte die Kampagne neu.';
+    return `${level.name} | Tastatur: Pfeile + Leertaste | iPhone: Touch-Tasten`;
+  }, [campaignWon, gameOver, level.name, levelWon]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -190,11 +251,11 @@ const App: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const currentLevel = cloneLevelData(level);
+    const { physics, platforms, coins, enemies, worldWidth, winX, playerStartX, playerStartY } = currentLevel;
+
     let animationFrame = 0;
     const keys = new Set<string>();
-    const level = buildLevel(variant);
-    const physics = buildPhysics(variant);
-    const { platforms, coins, enemies, worldWidth, winX, playerStartX, playerStartY } = level;
 
     const player = {
       x: playerStartX,
@@ -209,8 +270,8 @@ const App: React.FC = () => {
     };
 
     let cameraX = 0;
-    let points = 0;
-    let remainingLives = MAX_LIVES;
+    let points = score;
+    let remainingLives = lives;
     let ended = false;
 
     const respawn = (): void => {
@@ -219,13 +280,14 @@ const App: React.FC = () => {
       player.vx = 0;
       player.vy = 0;
       player.onGround = false;
-      player.invulnerableUntil = performance.now() + 1200;
+      player.invulnerableUntil = performance.now() + 1000;
     };
 
     const handleHit = (): void => {
       if (ended) return;
       const now = performance.now();
       if (now < player.invulnerableUntil) return;
+
       remainingLives -= 1;
       setLives(remainingLives);
       if (remainingLives <= 0) {
@@ -237,10 +299,11 @@ const App: React.FC = () => {
     };
 
     const onKeyDown = (event: KeyboardEvent): void => {
-      keys.add(event.key.toLowerCase());
-      if (event.key === ' ') {
+      const key = event.key.toLowerCase();
+      if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' '].includes(key)) {
         event.preventDefault();
       }
+      keys.add(key);
     };
 
     const onKeyUp = (event: KeyboardEvent): void => {
@@ -248,18 +311,18 @@ const App: React.FC = () => {
     };
 
     const drawBackground = (): void => {
-      ctx.fillStyle = variant === 'SuperMarioBros2-v0' ? '#86ccff' : '#8ed2ff';
+      ctx.fillStyle = '#8ed2ff';
       ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
       for (let i = 0; i < 6; i += 1) {
-        const cloudX = ((cameraX * (variant === 'SuperMarioBros2-v0' ? 0.2 : 0.15) + i * 210) % (WIDTH + 200)) - 100;
-        const y = 60 + (i % 4) * 40;
+        const cloudX = ((cameraX * 0.17 + i * 220) % (WIDTH + 220)) - 110;
+        const y = 58 + (i % 4) * 38;
         ctx.fillStyle = '#e8f7ff';
         ctx.fillRect(cloudX, y, 70, 24);
         ctx.fillRect(cloudX + 16, y - 14, 42, 20);
       }
 
-      ctx.fillStyle = variant === 'SuperMarioBros2-v0' ? '#68b843' : '#77bc52';
+      ctx.fillStyle = '#77bc52';
       ctx.fillRect(0, 460, WIDTH, 80);
     };
 
@@ -272,12 +335,12 @@ const App: React.FC = () => {
       } else if (platform.style === 'pipe') {
         ctx.fillStyle = '#2d9f45';
       } else {
-        ctx.fillStyle = '#b8713d';
+        ctx.fillStyle = '#8d4e24';
       }
       ctx.fillRect(sx, platform.y, platform.w, platform.h);
 
       if (platform.style === 'brick') {
-        ctx.strokeStyle = '#844a21';
+        ctx.strokeStyle = '#6a3718';
         for (let x = 0; x < platform.w; x += 24) {
           ctx.beginPath();
           ctx.moveTo(sx + x, platform.y);
@@ -296,6 +359,7 @@ const App: React.FC = () => {
       if (coin.collected) return;
       const sx = coin.x - cameraX;
       if (sx < -40 || sx > WIDTH + 40) return;
+
       ctx.fillStyle = '#ffd54a';
       ctx.beginPath();
       ctx.arc(sx, coin.y, coin.r, 0, Math.PI * 2);
@@ -308,6 +372,7 @@ const App: React.FC = () => {
       if (!enemy.alive) return;
       const sx = enemy.x - cameraX;
       if (sx + enemy.w < -40 || sx > WIDTH + 40) return;
+
       ctx.fillStyle = '#6b3a1e';
       ctx.fillRect(sx, enemy.y, enemy.w, enemy.h);
       ctx.fillStyle = '#ffefdf';
@@ -319,7 +384,7 @@ const App: React.FC = () => {
       const sx = winX - cameraX;
       ctx.fillStyle = '#e8f7ff';
       ctx.fillRect(sx, 170, 8, 300);
-      ctx.fillStyle = '#2596ff';
+      ctx.fillStyle = '#42A5F5';
       ctx.fillRect(sx + 8, 185, 56, 42);
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(sx + 16, 197, 12, 12);
@@ -403,7 +468,7 @@ const App: React.FC = () => {
           }
         }
 
-        if (player.y > HEIGHT + 100) {
+        if (player.y > HEIGHT + 110) {
           handleHit();
         }
 
@@ -442,7 +507,10 @@ const App: React.FC = () => {
 
         if (player.x >= winX) {
           ended = true;
-          setWon(true);
+          setLevelWon(true);
+          if (levelIndex === LEVELS.length - 1) {
+            setCampaignWon(true);
+          }
         }
       }
 
@@ -467,26 +535,26 @@ const App: React.FC = () => {
       window.removeEventListener('keydown', onKeyDown);
       window.removeEventListener('keyup', onKeyUp);
     };
-  }, [sessionId, variant]);
+  }, [levelIndex, runId]);
 
-  const restart = (): void => {
+  const restartCampaign = (): void => {
     touchInputRef.current = { left: false, right: false, jump: false };
+    setLevelIndex(0);
     setScore(0);
     setLives(MAX_LIVES);
     setGameOver(false);
-    setWon(false);
-    setSessionId(value => value + 1);
+    setLevelWon(false);
+    setCampaignWon(false);
+    setRunId(value => value + 1);
   };
 
-  const changeVariant = (next: Variant): void => {
-    if (next === variant) return;
+  const nextLevel = (): void => {
+    if (levelIndex >= LEVELS.length - 1) return;
     touchInputRef.current = { left: false, right: false, jump: false };
-    setVariant(next);
-    setScore(0);
-    setLives(MAX_LIVES);
+    setLevelIndex(value => value + 1);
     setGameOver(false);
-    setWon(false);
-    setSessionId(value => value + 1);
+    setLevelWon(false);
+    setRunId(value => value + 1);
   };
 
   const onControlDown = (key: 'left' | 'right' | 'jump') => (event: React.PointerEvent<HTMLButtonElement>): void => {
@@ -503,57 +571,26 @@ const App: React.FC = () => {
 
   return (
     <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: '16px' }}>
-      <div style={{ width: 'min(100%, 980px)', background: 'rgba(7, 26, 49, 0.65)', border: '3px solid #d9f2ff', borderRadius: 12, padding: 14 }}>
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 8 }}>
-          <strong style={{ fontSize: 20, color: '#d9f2ff' }}>Super Blue Bunny Bros</strong>
-          <div style={{ display: 'flex', gap: 16, fontWeight: 700 }}>
+      <div style={{ width: 'min(100%, 980px)', background: '#2E7D32', border: '4px solid #1B5E20', borderRadius: 12, padding: 14, boxShadow: '0 14px 30px rgba(0,0,0,0.45)', color: '#E8F5E9' }}>
+        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 10 }}>
+          <div>
+            <strong style={{ fontSize: 20, color: '#FFEB3B', textShadow: '2px 2px 0 #000' }}>Puka&apos;s Party</strong>
+            <div style={{ fontSize: 12, marginTop: 6 }}>{level.name}</div>
+          </div>
+          <div style={{ display: 'flex', gap: 16, fontWeight: 700, fontSize: 12 }}>
             <span>Score: {score}</span>
-            <span>Vies: {lives}</span>
+            <span>Leben: {lives}</span>
+            <span>Level: {levelIndex + 1}/{LEVELS.length}</span>
           </div>
         </header>
 
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10 }}>
-          <button
-            onClick={() => changeVariant('SuperMarioBros-v0')}
-            style={{
-              border: '2px solid #d9f2ff',
-              background: variant === 'SuperMarioBros-v0' ? '#1a6ad6' : '#184f84',
-              color: '#fff',
-              borderRadius: 6,
-              padding: '6px 12px',
-              fontWeight: 700,
-              cursor: 'pointer'
-            }}
-          >
-            SuperMarioBros-v0
-          </button>
-          <button
-            onClick={() => changeVariant('SuperMarioBros2-v0')}
-            style={{
-              border: '2px solid #d9f2ff',
-              background: variant === 'SuperMarioBros2-v0' ? '#1a6ad6' : '#184f84',
-              color: '#fff',
-              borderRadius: 6,
-              padding: '6px 12px',
-              fontWeight: 700,
-              cursor: 'pointer'
-            }}
-          >
-            SuperMarioBros2-v0
-          </button>
-        </div>
-
-        <div style={{ marginBottom: 10, color: '#c5e6ff', fontSize: 13 }}>
-          {variant === 'SuperMarioBros-v0'
-            ? 'v0: sauts plus verticaux et inertia plus lourde, style classique.'
-            : 'v2: deplacements plus rapides et sauts plus flottants, style plus aerien.'}
-        </div>
+        <div style={{ marginBottom: 10, color: '#C8E6C9', fontSize: 11, lineHeight: 1.4 }}>{level.description}</div>
 
         <canvas
           ref={canvasRef}
           width={WIDTH}
           height={HEIGHT}
-          style={{ width: '100%', maxWidth: WIDTH, height: 'auto', border: '3px solid #13314f', borderRadius: 8, background: '#8ed2ff', imageRendering: 'pixelated', touchAction: 'none' }}
+          style={{ width: '100%', maxWidth: WIDTH, height: 'auto', border: '3px solid #0D3B10', borderRadius: 8, background: '#8ed2ff', imageRendering: 'pixelated', touchAction: 'none' }}
         />
 
         <div style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', gap: 12 }}>
@@ -563,7 +600,7 @@ const App: React.FC = () => {
               onPointerUp={onControlUp('left')}
               onPointerCancel={onControlUp('left')}
               onPointerLeave={onControlUp('left')}
-              style={{ border: '2px solid #d9f2ff', background: '#184f84', color: '#fff', borderRadius: 10, padding: '10px 16px', fontWeight: 700, minWidth: 60, touchAction: 'none' }}
+              style={{ border: '2px solid #1B5E20', background: '#66BB6A', color: '#fff', borderRadius: 10, padding: '10px 16px', minWidth: 60, touchAction: 'none' }}
             >
               ←
             </button>
@@ -572,7 +609,7 @@ const App: React.FC = () => {
               onPointerUp={onControlUp('right')}
               onPointerCancel={onControlUp('right')}
               onPointerLeave={onControlUp('right')}
-              style={{ border: '2px solid #d9f2ff', background: '#184f84', color: '#fff', borderRadius: 10, padding: '10px 16px', fontWeight: 700, minWidth: 60, touchAction: 'none' }}
+              style={{ border: '2px solid #1B5E20', background: '#66BB6A', color: '#fff', borderRadius: 10, padding: '10px 16px', minWidth: 60, touchAction: 'none' }}
             >
               →
             </button>
@@ -582,28 +619,36 @@ const App: React.FC = () => {
             onPointerUp={onControlUp('jump')}
             onPointerCancel={onControlUp('jump')}
             onPointerLeave={onControlUp('jump')}
-            style={{ border: '2px solid #d9f2ff', background: '#1a6ad6', color: '#fff', borderRadius: 10, padding: '10px 20px', fontWeight: 700, minWidth: 88, touchAction: 'none' }}
-          >
-            SAUT
+              style={{ border: '2px solid #880E4F', background: '#F06292', color: '#fff', borderRadius: 10, padding: '10px 20px', minWidth: 96, touchAction: 'none' }}
+            >
+            SPRUNG
           </button>
         </div>
 
-        <footer style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-          <span>{statusText}</span>
-          <div style={{ display: 'flex', gap: 8 }}>
-            {(gameOver || won) && (
+        <footer style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 11 }}>{statusText}</span>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {levelWon && !campaignWon && (
               <button
-                onClick={restart}
-                style={{ border: '2px solid #d9f2ff', background: '#1a6ad6', color: '#fff', borderRadius: 6, padding: '6px 12px', fontWeight: 700, cursor: 'pointer' }}
+                onClick={nextLevel}
+                style={{ border: '2px solid #1B5E20', background: '#66BB6A', color: '#fff', borderRadius: 6, padding: '6px 12px', cursor: 'pointer' }}
               >
-                Rejouer
+                Naechstes Level
+              </button>
+            )}
+            {(gameOver || campaignWon) && (
+              <button
+                onClick={restartCampaign}
+                style={{ border: '2px solid #880E4F', background: '#F06292', color: '#fff', borderRadius: 6, padding: '6px 12px', cursor: 'pointer' }}
+              >
+                Kampagne neu starten
               </button>
             )}
             <a
               href={`${basePath}/`}
-              style={{ border: '2px solid #d9f2ff', background: '#184f84', color: '#fff', borderRadius: 6, padding: '6px 12px', fontWeight: 700, textDecoration: 'none' }}
+              style={{ border: '2px solid #263238', background: '#546E7A', color: '#fff', borderRadius: 6, padding: '6px 12px', textDecoration: 'none' }}
             >
-              Retour menu
+              Alle Spiele
             </a>
           </div>
         </footer>

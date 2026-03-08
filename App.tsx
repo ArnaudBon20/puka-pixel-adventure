@@ -11,13 +11,13 @@ const DEFAULT_SKIN: PugSkin = {
 
 const BABY_PUKA_SKIN: PugSkin = {
   id: 'bebe-puka',
-  name: 'Bebe Puka',
+  name: 'Baby Puka',
   imageUrl: null
 };
 
 const MAMA_PUKA_SKIN: PugSkin = {
   id: 'maman-puka',
-  name: 'Maman Puka',
+  name: 'Mama Puka',
   imageUrl: null
 };
 
@@ -81,7 +81,7 @@ const App: React.FC = () => {
               Puka&apos;s Party
             </h1>
             <p className="text-[#A5D6A7] text-sm md:text-lg">
-              Choisis un jeu et pars a l&apos;aventure avec Puka.
+              Waehle ein Spiel und starte mit Puka ins Abenteuer.
             </p>
           </div>
         )}
@@ -92,52 +92,52 @@ const App: React.FC = () => {
             <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
               <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Puka&apos;s Party</h2>
               <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
-                Endless runner: saute, esquive et fais le meilleur score avec ton lapin.
+                Endlos-Runner: Springe, weiche aus und hole den besten Punktestand mit deinem Hasen.
               </p>
               <button
                 onClick={handleOpenRunner}
                 className="mt-auto bg-[#F06292] hover:bg-[#EC407A] text-white text-sm py-3 px-4 rounded border-b-4 border-[#880E4F] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
               >
-                JOUER
+                SPIELEN
               </button>
             </div>
 
             <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
-              <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Garden Mystery</h2>
+              <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Gartengeheimnis</h2>
               <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
-                Infiltration strategique: recupere les friandises sans te faire attraper.
+                Schleichspiel: Sammle die Leckereien, ohne erwischt zu werden.
               </p>
               <a
                 href={`${basePath}/puka-garden-mystery/`}
                 className="mt-auto inline-flex justify-center bg-[#66BB6A] hover:bg-[#4CAF50] text-white text-sm py-3 px-4 rounded border-b-4 border-[#1B5E20] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
               >
-                JOUER
+                SPIELEN
               </a>
             </div>
 
             <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
               <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Super Blue Bunny Bros</h2>
               <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
-                Platformer mario-like en lapin bleu, jouable clavier et iPhone.
+                Plattformspiel mit blauem Hasen, spielbar per Tastatur und iPhone.
               </p>
               <a
                 href={`${basePath}/super-bunny-bros/`}
                 className="mt-auto inline-flex justify-center bg-[#42A5F5] hover:bg-[#1E88E5] text-white text-sm py-3 px-4 rounded border-b-4 border-[#0D47A1] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
               >
-                JOUER
+                SPIELEN
               </a>
             </div>
 
             <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
               <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Puka Memory</h2>
               <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
-                Memory familial avec Puka, la famille, animaux et drapeaux.
+                Memory mit Puka, Familie, Tieren und Flaggen.
               </p>
               <a
                 href={`${basePath}/puka-memory/`}
                 className="mt-auto inline-flex justify-center bg-[#FFCA28] hover:bg-[#FFB300] text-[#1B5E20] text-sm py-3 px-4 rounded border-b-4 border-[#F57F17] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
               >
-                JOUER
+                SPIELEN
               </a>
             </div>
           </div>
@@ -170,7 +170,7 @@ const App: React.FC = () => {
                         skin.id === 'bebe-puka' ? 'bg-white' : skin.id === 'maman-puka' ? 'bg-[#B3E5FC]' : 'bg-[#E5C098]'
                       }`}>
                         <span className="z-10">
-                          {skin.id === 'bebe-puka' ? 'BEBE' : skin.id === 'maman-puka' ? 'MAMAN' : 'PUKA'}
+                          {skin.id === 'bebe-puka' ? 'BABY' : skin.id === 'maman-puka' ? 'MAMA' : 'PUKA'}
                         </span>
                         <div className="absolute bottom-0 w-full h-1/4 bg-[#F48FB1]"></div>
                       </div>
@@ -197,7 +197,7 @@ const App: React.FC = () => {
               onClick={handleBackToHome}
               className="bg-[#546E7A] hover:bg-[#455A64] text-white text-sm md:text-base py-3 px-6 rounded border-b-4 border-[#263238] active:border-b-0 active:mt-1 font-bold shadow-xl pixel-text transition-all"
             >
-              ACCUEIL DES JEUX
+              SPIELE-UEBERSICHT
             </button>
           </div>
         )}
