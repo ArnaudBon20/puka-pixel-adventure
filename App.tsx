@@ -96,23 +96,23 @@ const App: React.FC = () => {
               </p>
               <button
                 onClick={handleOpenRunner}
-                className="mt-auto bg-[#F06292] hover:bg-[#EC407A] text-white text-sm py-3 px-4 rounded border-b-4 border-[#880E4F] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
+                className="mt-auto bg-[#F06292] hover:bg-[#EC407A] text-white text-sm py-3 px-4 rounded border-b-4 border-[#880E4F] font-bold pixel-text transition-all cursor-pointer"
               >
                 SPIELEN
               </button>
             </div>
 
             <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
-              <h2 className="text-[#E8F5E9] text-lg mb-3 pixel-text">Gartengeheimnis</h2>
+              <h2 className="text-[#E8F5E9] text-base md:text-lg mb-3 pixel-text">Gartengeheimnis</h2>
               <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
                 Schleichspiel: Sammle die Leckereien, ohne erwischt zu werden.
               </p>
-              <a
-                href={`${basePath}/puka-garden-mystery/`}
-                className="mt-auto inline-flex justify-center bg-[#66BB6A] hover:bg-[#4CAF50] text-white text-sm py-3 px-4 rounded border-b-4 border-[#1B5E20] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
+              <button
+                onClick={() => { window.location.href = `${basePath}/puka-garden-mystery/`; }}
+                className="mt-auto inline-flex justify-center bg-[#66BB6A] hover:bg-[#4CAF50] text-white text-sm py-3 px-4 rounded border-b-4 border-[#1B5E20] font-bold pixel-text transition-all cursor-pointer"
               >
                 SPIELEN
-              </a>
+              </button>
             </div>
 
             <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
@@ -120,12 +120,12 @@ const App: React.FC = () => {
               <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
                 Plattformspiel mit blauem Hasen, spielbar per Tastatur und iPhone.
               </p>
-              <a
-                href={`${basePath}/super-bunny-bros/`}
-                className="mt-auto inline-flex justify-center bg-[#42A5F5] hover:bg-[#1E88E5] text-white text-sm py-3 px-4 rounded border-b-4 border-[#0D47A1] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
+              <button
+                onClick={() => { window.location.href = `${basePath}/super-bunny-bros/`; }}
+                className="mt-auto inline-flex justify-center bg-[#42A5F5] hover:bg-[#1E88E5] text-white text-sm py-3 px-4 rounded border-b-4 border-[#0D47A1] font-bold pixel-text transition-all cursor-pointer"
               >
                 SPIELEN
-              </a>
+              </button>
             </div>
 
             <div className="bg-[#2E7D32] p-5 rounded-lg border-4 border-[#1B5E20] shadow-xl flex flex-col">
@@ -133,12 +133,12 @@ const App: React.FC = () => {
               <p className="text-[#C8E6C9] text-xs md:text-sm mb-6 leading-6">
                 Memory mit Puka, Familie, Tieren und Flaggen.
               </p>
-              <a
-                href={`${basePath}/puka-memory/`}
-                className="mt-auto inline-flex justify-center bg-[#FFCA28] hover:bg-[#FFB300] text-[#1B5E20] text-sm py-3 px-4 rounded border-b-4 border-[#F57F17] active:border-b-0 active:mt-[2px] font-bold pixel-text transition-all"
+              <button
+                onClick={() => { window.location.href = `${basePath}/puka-memory/`; }}
+                className="mt-auto inline-flex justify-center bg-[#FFCA28] hover:bg-[#FFB300] text-[#1B5E20] text-sm py-3 px-4 rounded border-b-4 border-[#F57F17] font-bold pixel-text transition-all cursor-pointer"
               >
                 SPIELEN
-              </a>
+              </button>
             </div>
           </div>
         )}

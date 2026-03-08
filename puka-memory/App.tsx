@@ -203,13 +203,33 @@ const App: React.FC = () => {
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <button
               onClick={resetGame}
-              style={{ border: '2px solid #880E4F', background: '#F06292', color: '#fff', borderRadius: 6, padding: '6px 12px', cursor: 'pointer' }}
+              style={{
+                border: '2px solid #880E4F',
+                background: '#F06292',
+                color: '#fff',
+                borderRadius: 6,
+                padding: '7px 14px',
+                cursor: 'pointer',
+                fontSize: 10,
+                lineHeight: 1.25
+              }}
             >
               Nochmal spielen
             </button>
             <a
               href={`${basePath}/`}
-              style={{ border: '2px solid #263238', background: '#546E7A', color: '#fff', borderRadius: 6, padding: '6px 12px', textDecoration: 'none' }}
+              style={{
+                border: '2px solid #263238',
+                background: '#546E7A',
+                color: '#fff',
+                borderRadius: 6,
+                padding: '7px 14px',
+                textDecoration: 'none',
+                fontSize: 10,
+                lineHeight: 1.25,
+                display: 'inline-flex',
+                alignItems: 'center'
+              }}
             >
               Alle Spiele
             </a>
