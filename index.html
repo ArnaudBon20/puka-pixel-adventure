@@ -12,7 +12,9 @@
         font-family: 'Press Start 2P', cursive;
         background-color: #1a2f1a; /* Dark Garden Green */
         color: #f3f3f3;
-        overflow: hidden; /* Prevent scrolling on mobile while playing */
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .pixel-text {
         text-shadow: 2px 2px 0px #000;

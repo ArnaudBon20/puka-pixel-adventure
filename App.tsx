@@ -71,8 +71,8 @@ const App: React.FC = () => {
   const basePath = window.location.pathname.includes('/puka-pixel-adventure/') ? '/puka-pixel-adventure' : '';
 
   return (
-    <div className="min-h-screen bg-[#1b2e1b] flex items-center justify-center p-4">
-      <div className="w-full max-w-5xl">
+    <div className="min-h-screen bg-[#1b2e1b] flex items-start md:items-center justify-center p-4 overflow-y-auto">
+      <div className="w-full max-w-5xl py-4 md:py-0">
         
         {/* Header/Title */}
         {gameState !== GameState.PLAYING && isHome && (
